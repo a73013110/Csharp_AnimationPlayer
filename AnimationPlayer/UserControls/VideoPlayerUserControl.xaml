@@ -1,0 +1,210 @@
+﻿<UserControl x:Name="userControl" x:Class="AnimationPlayer.UserControls.VideoPlayerUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnimationPlayer.UserControls"
+             xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:vlc="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
+             xmlns:properties="clr-namespace:AnimationPlayer.Properties"
+             xmlns:converter="clr-namespace:AnimationPlayer.Reflections"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1280">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converter:Slider_ProgressBar_Converter x:Key="SliderProgressBarConverter" />
+            <converter:BitmapToImageSource_Converter x:Key="BitmapToImageSourceConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+
+        <!-- #region 播放器 -->
+        <Grid Grid.Row="0" Grid.RowSpan="3">
+            <!--<Image Source="https://i.ytimg.com/vi/Oo5FRhMhxlw/maxresdefault.jpg" />-->
+            <vlc:VlcControl x:Name="Vlc_VideoPlayer" Loaded="Vlc_VideoPlayer_Loaded" MouseLeftButtonDown="Vlc_VideoPlayer_MouseLeftButtonDown" >
+                <vlc:VlcControl.ContextMenu>
+                    <ContextMenu Style="{StaticResource MetroContextMenu}" >
+                        <MenuItem x:Name="MI_Vlc_Log" Header="偵錯" Click="MI_Log_Click">
+                            <MenuItem.Icon>
+                                <Image Source="{Binding Source={x:Static properties:Resources.debug}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </vlc:VlcControl.ContextMenu>
+            </vlc:VlcControl>
+        </Grid>
+        <!-- #endregion -->
+
+        <!-- #region 上方資訊列 -->
+        <Grid x:Name="Grid_InfoBar" Grid.Row="0" DataContext="{Binding AnimationVod}">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#99000000" Offset="0"/>
+                    <GradientStop Color="#00000000" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="TB_AnimationTitle" Text="{Binding Title}" FontSize="18" Foreground="{DynamicResource AccentColorBrush4}" Margin="10"/>
+            <Button x:Name="Btn_VideoPlayerViewClose" Grid.Column="1" Style="{StaticResource MaterialDesignFlatButton_HoverBgRed}" materialDesign:ButtonAssist.CornerRadius="0" 
+                    Padding="0" Width="40" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" Focusable="False" Click="Btn_VideoPlayerViewClose_Click" Background="{x:Null}">
+                <materialDesign:PackIcon Width="30" Height="30" Kind="WindowClose" />
+            </Button>
+        </Grid>
+        <!-- #endregion -->
+
+        <!-- #region 下方控制列 -->
+        <Grid x:Name="Grid_ControlBar" Grid.Row="2" Opacity="{Binding Opacity, ElementName=Grid_InfoBar}">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#99000000" Offset="1"/>
+                    <GradientStop Color="#00000000"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <StackPanel Margin="10,0">
+                <!--<metro:MetroProgressBar x:Name="PB_ProgressBar" Value="30" Foreground="Red" MinHeight="0" Height="3" />-->
+                <Slider Style="{StaticResource MaterialDesignSlider_Color}" x:Name="Slider_ProgressBar" Cursor="Hand" Margin="20,0"
+                        Value="{Binding NowDuration, Converter={StaticResource SliderProgressBarConverter}}" LargeChange="5"
+                        Maximum="{Binding Duration, Converter={StaticResource SliderProgressBarConverter}}" SmallChange="5"
+                        PreviewMouseLeftButtonDown="Slider_ProgressBar_PreviewMouseLeftButtonDown"
+                        PreviewMouseLeftButtonUp="Slider_ProgressBar_PreviewMouseLeftButtonUp"
+                        PreviewKeyDown="Slider_ProgressBar_PreviewKeyDown">
+                    <Slider.Foreground>
+                        <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                            <GradientStop Color="#FFFF7878" Offset="1"/>
+                            <GradientStop Color="Red"/>
+                        </LinearGradientBrush>
+                    </Slider.Foreground>
+                </Slider>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <Button x:Name="Btn_PlayAndStop" Style="{StaticResource MaterialDesignFlatButton_HoverBgDark}" materialDesign:ButtonAssist.CornerRadius="0" 
+                                Padding="0" Width="80" Height="30" Focusable="False" Click="Btn_PlayAndStop_Click">
+                            <materialDesign:PackIcon Kind="{Binding Status}" Width="30" Height="30" Foreground="{DynamicResource AccentColorBrush3}" />
+                        </Button>
+                        <StackPanel x:Name="SP_VolumePanel" Orientation="Horizontal" Background="#00000000" MouseEnter="SP_VolumePanel_MouseEnter" MouseLeave="SP_VolumePanel_MouseLeave">
+                            <Button x:Name="Btn_Volume" Style="{StaticResource MaterialDesignFlatButton_HoverBgDark}" materialDesign:ButtonAssist.CornerRadius="0" Focusable="False" Click="Btn_Volume_Click">
+                                <materialDesign:PackIcon Kind="{Binding VolumeIcon}" Width="25" Height="25" Foreground="{DynamicResource AccentColorBrush3}" VerticalAlignment="Center" />
+                            </Button>
+                            <Slider x:Name="Slider_Volume" Style="{DynamicResource FlatSlider}" Value="{Binding Volume}" Width="0" Maximum="100" VerticalAlignment="Center" Foreground="{DynamicResource AccentColorBrush3}" Background="{DynamicResource HighlightBrush}" Margin="10,0" MinHeight="10" BorderBrush="#FF9B9B9B" Focusable="False" SmallChange="1" LargeChange="5" ValueChanged="Slider_Volume_ValueChanged" />
+                        </StackPanel>
+                        <TextBlock x:Name="TB_NowDuration" Text="{Binding NowDuration, StringFormat='{}{0:mm}:{0:ss}', FallbackValue=00:00}" Foreground="{DynamicResource AccentColorBrush2}" FontSize="14" VerticalAlignment="Center" />
+                        <TextBlock Text=" / " Foreground="{DynamicResource AccentColorBrush2}" FontSize="14" VerticalAlignment="Center" />
+                        <TextBlock x:Name="TB_TotalDuration" Text="{Binding Duration, StringFormat='{}{0:mm\\:ss}', FallbackValue=00:00}" Foreground="{DynamicResource AccentColorBrush2}" FontSize="14" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionDarkPopupBox}" Width="60" Height="30" Focusable="False"
+                                                 PlacementMode="BottomAndAlignCentres" Background="{DynamicResource AccentColorBrush}" BorderBrush="{DynamicResource AccentColorBrush}">
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon Kind="Settings" Foreground="{DynamicResource AccentColorBrush2}"/>
+                            </materialDesign:PopupBox.ToggleContent>
+                            <StackPanel>
+                                <Button x:Name="Btn_Rate_2" Style="{StaticResource MaterialDesignFlatButton_HoverBgDark}" materialDesign:ButtonAssist.CornerRadius="0" 
+                                Height="30" Width="110" Margin="3" Padding="10, 5" Focusable="False" Click="Btn_Rate_Click"
+                                FontSize="16" Foreground="White" FontFamily="Arial Rounded MT Bold" Background="#4C000000" BorderBrush="#4CFFFFFF" DataContext="2">
+                                    <TextBlock Text="Speed: 2x" />
+                                </Button>
+                                <Button x:Name="Btn_Rate_1point5" Style="{StaticResource MaterialDesignFlatButton_HoverBgDark}" materialDesign:ButtonAssist.CornerRadius="0" 
+                                Height="30" Width="110" Margin="3" Padding="10, 5" Focusable="False" Click="Btn_Rate_Click"
+                                FontSize="16" Foreground="White" FontFamily="Arial Rounded MT Bold" Background="#4C000000" BorderBrush="#4CFFFFFF" DataContext="1.5">
+                                    <TextBlock Text="Speed: 1.5x" />
+                                </Button>
+                                <Button x:Name="Btn_Rate_1" Style="{StaticResource MaterialDesignFlatButton_HoverBgDark}" materialDesign:ButtonAssist.CornerRadius="0" 
+                                Height="30" Width="110" Margin="3" Padding="10, 5" Focusable="False" Click="Btn_Rate_Click" Visibility="Collapsed"
+                                FontSize="16" Foreground="White" FontFamily="Arial Rounded MT Bold" Background="#4C000000" BorderBrush="#4CFFFFFF" DataContext="1">
+                                    <TextBlock Text="Speed: 1x" />
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                        <Button x:Name="Btn_FullScreen" Style="{StaticResource MaterialDesignFlatButton_HoverBgDark}" materialDesign:ButtonAssist.CornerRadius="0" 
+                                Padding="0" Width="60" Height="30" Focusable="False" Click="Btn_FullScreen_Click" IsEnabled="False">
+                            <materialDesign:PackIcon Kind="Fullscreen" Width="30" Height="30" Foreground="{DynamicResource AccentColorBrush3}" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <!-- #endregion -->
+
+        <!-- #region 載入中(避免使用者於影片尚未載入完畢就點及按鈕) -->
+        <Grid x:Name="Grid_Loading" Grid.Row="1" Grid.RowSpan="2" Visibility="Collapsed">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#00000000"/>
+                    <GradientStop Color="#CC141414" Offset="0.5"/>
+                    <GradientStop Color="#7F040404" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.ContextMenu>
+                <ContextMenu Style="{StaticResource MetroContextMenu}">
+                    <MenuItem Header="偵錯" Click="MI_Log_Click">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding Source={x:Static properties:Resources.debug}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </Grid.ContextMenu>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+            <metro:ProgressRing IsActive="True" Foreground="{DynamicResource AccentColorBrush2}" />
+        </Grid>
+        <!-- #endregion -->
+
+        <!-- #region Debug 資訊顯示的Grid -->
+        <Grid x:Name="Grid_Log" Grid.Row="0" Grid.RowSpan="3" Visibility="Collapsed" Background="#4C000000" IsHitTestVisible="False">
+            <Grid.OpacityMask>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop/>
+                    <GradientStop Offset="1"/>
+                    <GradientStop Color="#B2FFFFFF" Offset="0.007"/>
+                    <GradientStop Color="#CCFFFFFF" Offset="0.88"/>
+                </LinearGradientBrush>
+            </Grid.OpacityMask>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="影片串流資訊" Foreground="{DynamicResource AccentColorBrush4}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled">
+                    <TextBlock x:Name="TB_StreamLinkLog" Margin="25, 15" TextWrapping="Wrap" Foreground="{DynamicResource AccentColorBrush3}" FontSize="18" />
+                </ScrollViewer>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="播放器資訊" Foreground="{DynamicResource AccentColorBrush4}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled">
+                    <TextBlock x:Name="TB_VLCMediaPlayerLog" Margin="25, 15" TextWrapping="Wrap" Foreground="{DynamicResource AccentColorBrush3}" FontSize="18" />
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <!-- #endregion -->
+
+    </Grid>
+</UserControl>

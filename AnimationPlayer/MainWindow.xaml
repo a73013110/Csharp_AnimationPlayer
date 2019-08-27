@@ -1,0 +1,103 @@
+﻿<metro:MetroWindow x:Name="metroWindow" x:Class="AnimationPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnimationPlayer"
+        xmlns:cal="clr-namespace:CalcBinding;assembly=CalcBinding"
+        xmlns:UserControls="clr-namespace:AnimationPlayer.UserControls"
+        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        xmlns:properties="clr-namespace:AnimationPlayer.Properties"
+        xmlns:converter="clr-namespace:AnimationPlayer.Reflections"
+        
+        mc:Ignorable="d"
+                   
+        ShowIconOnTitleBar="False" Icon="D:/Program Library/Csharp_AnimationPlayer/icon.png"
+        Height="750" Width="1280"
+        BorderThickness="0"
+                      
+        WindowStartupLocation="CenterScreen" GlowBrush="Black" MinWidth="720" MinHeight="405" Closing="MetroWindow_Closing">
+
+    <metro:MetroWindow.Resources>
+        <ResourceDictionary>
+            <converter:BitmapToImageSource_Converter x:Key="BitmapToImageSourceConverter" />
+            <ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </metro:MetroWindow.Resources>
+
+
+    <!-- #region 視窗左上方按鈕 -->
+    <metro:MetroWindow.LeftWindowCommands>
+        <metro:WindowCommands>
+            <Button Foreground="Red">
+                <materialDesign:PackIcon Kind="AnimationPlayOutline" />
+            </Button>
+            <Button x:Name="Btn_PopularAnimation" Foreground="White">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Fire" />
+                    <TextBlock Text=" 精選動畫" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="Btn_FavoriteAnimation" Foreground="White">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Star" />
+                    <TextBlock Text=" 我的最愛" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="Btn_RecentAnimation" Foreground="White">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Recent" />
+                    <TextBlock Text=" 最近觀看" />
+                </StackPanel>
+            </Button>
+        </metro:WindowCommands>
+    </metro:MetroWindow.LeftWindowCommands>
+    <!-- #endregion -->
+
+    <!-- #region 視窗右上方按鈕 -->
+    <metro:MetroWindow.RightWindowCommands>
+        <metro:WindowCommands>
+            <!--<Button Content="{materialDesign:PackIcon Kind=TshirtCrew}" />-->
+            <!--<ToggleButton Content="Flyout" IsChecked="{Binding ElementName=DH_Dialog, Path=IsOpen}" />-->
+        </metro:WindowCommands>
+    </metro:MetroWindow.RightWindowCommands>
+    <!-- #endregion -->
+
+
+    <!-- #region Flyouts -->
+    <metro:MetroWindow.Flyouts>
+        <metro:FlyoutsControl>
+            
+            <metro:Flyout x:Name="Flyout_Animation" Position="Left"
+                          CloseButtonVisibility="Collapsed" TitleVisibility="Collapsed"
+                          Background="#FF1D1D1D" IsOpen="False"
+                          Width="400"
+                          Height="{Binding ActualHeight, ElementName=metroWindow, Mode=OneWay}">
+                <!--<UserControls:AnimationViewUserControl />-->
+            </metro:Flyout>
+
+            <metro:Flyout x:Name="Flyout_Video" Position="Bottom"
+                          CloseButtonVisibility="Collapsed" TitleVisibility="Collapsed" 
+                          Background="#FF1D1D1D" IsOpen="False"
+                          Height="{cal:Binding ActualHeight-30, ElementName=metroWindow}">
+                <!--<UserControls:VideoPlayerUserControl />-->
+            </metro:Flyout>
+
+        </metro:FlyoutsControl>
+    </metro:MetroWindow.Flyouts>
+    <!-- #endregion -->
+
+    <materialDesign:DialogHost x:Name="DH_Dialog" IsOpen="False">
+        <materialDesign:DialogHost.DialogContent>
+            <UserControls:MessageDialogUserControl />
+        </materialDesign:DialogHost.DialogContent>
+        <Grid>            
+            <Image Source="{Binding Source={x:Static properties:Resources.background}, Converter={StaticResource BitmapToImageSourceConverter}}" Stretch="Fill" />
+            <metro:MetroProgressBar x:Name="PB_Progress" Visibility="Collapsed" VerticalAlignment="Top" IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush2}" Height="4" MinHeight="4" />
+            <UserControls:CrawlerUserControl x:Name="UC_CrawlerUserControl" />
+            <materialDesign:Snackbar x:Name="SB_Hint" />
+        </Grid>
+    </materialDesign:DialogHost>
+</metro:MetroWindow>

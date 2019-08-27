@@ -1,0 +1,64 @@
+CMD Line: streamlink.bat <url> best --player-external-http --hls-segment-threads=2 
+"D:\Program Library\Csharp_AnimationPlayer\AnimationPlayer\StreamLink\x86\streamlink.bat" https://vpx.myself-bbs.com/44685/001/720p.m3u8 best --player="C:\Users\a7301\Desktop\VLCMediaPlayerPortable_3.0.8\App\VLC64\vlc.exe" --hls-segment-threads=4 --loglevel=debug --player-passthrough=hls
+
+General options:
+
+-j:
+Output JSON representations instead of the normal text output. 
+Useful for external scripting.
+
+--hls-live-edge SEGMENTS:
+How many segments from the end to start live HLS streams on.
+The lower the value the lower latency from the source you will be, but also increases the chance of buffering.
+Default is: 3.
+
+--hls-segment-attempts ATTEMPTS:
+How many attempts should be done to download each HLS segment before giving up.
+Default is: 3.
+
+--hls-segment-threads THREADS:
+The size of the thread pool used to download HLS segments. Minimum value is 1 and maximum is 10.
+Default is: 1.
+
+--hls-segment-timeout TIMEOUT:
+HLS segment connect and read timeout.
+Default is: 10.0.
+
+-l LEVEL, --loglevel LEVEL
+Set the log message threshold.
+Valid levels are: none, error, warning, info, debug, trace
+
+--hls-segment-ignore-names NAMES
+A comma-delimited list of segment names that will not be fetched.
+Example: --hls-segment-ignore-names 000,001,002
+This will ignore every segment that ends with 000.ts, 001.ts and 002.ts
+Default is: None.
+※The --hls-timeout must be increased, to a time that is longer than the ignored break.
+
+--hls-timeout TIMEOUT
+Timeout for reading data from HLS streams.
+Default is: 60.0.
+
+--hls-start-offset [HH:]MM:SS
+Amount of time to skip from the beginning of the stream. For live streams, this is a negative offset from the end of the stream (rewind).
+Default is: 00:00:00.
+
+--ringbuffer-size SIZE
+The maximum size of ringbuffer. Add a M or K suffix to specify mega or kilo bytes instead of bytes.
+The ringbuffer is used as a temporary storage between the stream and the player. This is to allows us to download the stream faster than the player wants to read it.
+The smaller the size, the higher chance of the player buffering if there are download speed dips and the higher size the more data we can use as a storage to catch up from speed dips.
+It also allows you to temporary pause as long as the ringbuffer doesn't get full since we continue to download the stream in the background.
+Default is: "16M".
+※A smaller size is recommended on lower end systems (such as Raspberry Pi) when playing stream types that require some extra processing (such as HDS) to avoid unnecessary background processing.
+
+--player-external-http
+Serve stream data through HTTP without running any player. This is useful to allow external devices like smartphones or streaming boxes to watch streams they wouldn't be able to otherwise.
+Behavior will be similar to the continuous HTTP option, but no player program will be started, and the server will listen on all available connections instead of just in the local (loopback) interface.
+The URLs that can be used to access the stream will be printed to the console, and the server can be interrupted using CTRL-C.
+
+--player-external-http-port PORT
+A fixed port to use for the external HTTP server if that mode is enabled. Omit or set to 0 to use a random high ( >1024) port.
+
+--hls-start-offset [HH:]MM:SS
+Amount of time to skip from the beginning of the stream. For live streams, this is a negative offset from the end of the stream (rewind).
+Default is: 00:00:00.

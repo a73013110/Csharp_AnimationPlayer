@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AnimationPlayer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="StreamLink_hls_segment_threads" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="StreamLink_video_querity" Type="System.String" Scope="User">
+      <Value Profile="(Default)">best</Value>
+    </Setting>
+    <Setting Name="Vlc_file_caching" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
+    <Setting Name="Vlc_network_caching" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
+    <Setting Name="Animated_Character_Normal_Source" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://i.pinimg.com/originals/ad/4f/a3/ad4fa32b124381aa6bc1e73490748277.gif</Value>
+    </Setting>
+    <Setting Name="Animated_Character_Enter_Source" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://4.bp.blogspot.com/-yLL899xkV-A/Wwufve6-2WI/AAAAAAAJlig/QYUS0iS1R98IJjYZ1ISEpOgy1r7OCMo1gCLcBGAs/s1600/AW1121058_05.gif</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
