@@ -125,8 +125,7 @@ namespace AnimationPlayer.Models
                         !searchAnimation.LastElementChild.LastElementChild.TextContent.Contains("完結動畫全集")) continue;
                     noAnimation = false;
                     // 取得動畫的名稱及連結, 並加入UserControl
-                    var animation = searchAnimation.FirstElementChild.FirstElementChild as IHtmlAnchorElement;
-                    _ = this.AddAnimation(animation.Href);
+                    _ = this.AddAnimation("https://myself-bbs.com/thread-" + searchAnimation.GetAttribute("id") + "-1-1.html");
                 }
             }
             #endregion

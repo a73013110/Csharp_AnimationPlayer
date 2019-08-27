@@ -20,7 +20,7 @@ namespace AnimationPlayer.UserControls
             {
                 FileName = "./StreamLink/streamlink.bat",
                 WorkingDirectory = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory),
-                Arguments = $"{this.VideoPlayerModel.AnimationVod.Link} " +
+                Arguments = $"{this.VideoPlayerModel.AnimationVod.Href} " +
                 $"{Properties.Settings.Default.StreamLink_video_querity} " +
                 $"--hls-start-offset={this.VideoPlayerModel.NowDurationOffSet} " +
                 $"--hls-segment-threads={Properties.Settings.Default.StreamLink_hls_segment_threads} " +

@@ -97,7 +97,7 @@ namespace AnimationPlayer.UserControls
             Task.Run(() =>
             {
                 // 取得影片總時長, Timeout 10秒
-                this.Vlc_VideoPlayer.SourceProvider.MediaPlayer.Play(this.VideoPlayerModel.AnimationVod.Link);
+                this.Vlc_VideoPlayer.SourceProvider.MediaPlayer.Play(this.VideoPlayerModel.AnimationVod.Href);
                 SpinWait.SpinUntil(() => this.Vlc_VideoPlayer.SourceProvider.MediaPlayer.IsPlaying(), 10000);
                 this.VideoPlayerModel.Duration = TimeSpan.FromSeconds((int)(this.Vlc_VideoPlayer.SourceProvider.MediaPlayer.Length / 1000));
                 this.Vlc_VideoPlayer.SourceProvider.MediaPlayer.Stop();

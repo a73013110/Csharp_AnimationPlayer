@@ -15,10 +15,10 @@ namespace AnimationPlayer.Objects
 
         }
 
-        public AnimationVodObject(string title, string link)
+        public AnimationVodObject(string title, string href)
         {
             this.Title = title;
-            this.Link = link;
+            this.Href = href;
         }
 
         /// <summary>
@@ -34,12 +34,12 @@ namespace AnimationPlayer.Objects
         /// <summary>
         /// 本集影片片源
         /// </summary>
-        //private string link = "https://vpx.myself-bbs.com/45100/001/720p.m3u8";
-        private string link = "https://vpx.myself-bbs.com/44685/001/720p.m3u8";
-        public string Link
+        //private string href = "https://vpx.myself-bbs.com/45100/001/720p.m3u8";
+        private string href = "https://vpx.myself-bbs.com/44685/001/720p.m3u8";
+        public string Href
         {
-            get { return link; }
-            set { SetProperty(ref link, value); }
+            get { return href; }
+            set { SetProperty(ref href, value); }
         }
 
         /// <summary>

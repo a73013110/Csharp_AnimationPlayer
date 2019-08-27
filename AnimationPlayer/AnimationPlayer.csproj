@@ -126,6 +126,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GlobalFunctions\Json.cs" />
+    <Compile Include="GlobalFunctions\AnimationRecentWatchJson.cs" />
     <Compile Include="Models\MessageDialogModel.cs" />
     <Compile Include="Models\VideoPlayerModel.cs" />
     <Compile Include="Objects\CefBrowser.cs" />

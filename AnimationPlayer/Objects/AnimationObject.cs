@@ -15,11 +15,11 @@ namespace AnimationPlayer.Objects
         {
         }
 
-        public AnimationObject(string name, string image_source, string link)
+        public AnimationObject(string name, string image_source, string href)
         {
             this.Name = name;
             this.Image_source = image_source;
-            this.Link = link;
+            this.Href = href;
         }
 
         //public string Name { get; set; }
@@ -37,11 +37,21 @@ namespace AnimationPlayer.Objects
             set { SetProperty(ref image_source, value); }
         }
 
-        private string link = "https://myself-bbs.com/thread-44685-1-1.html";
-        public string Link
+        private string href = "https://myself-bbs.com/thread-44685-1-1.html";
+        public string Href
         {
-            get { return link; }
-            set { SetProperty(ref link, value); }
+            get { return href; }
+            set { SetProperty(ref href, value); }
+        }
+
+        /// <summary>
+        /// 是否為紀錄最近觀看
+        /// </summary>
+        private int recent_watch_index = -1;
+        public int Recent_Watch_Index
+        {
+            get { return recent_watch_index; }
+            set { SetProperty(ref recent_watch_index, value); }
         }
     }
 }

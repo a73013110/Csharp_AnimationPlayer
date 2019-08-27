@@ -31,7 +31,7 @@ namespace AnimationPlayer.Models
         {
             // 取得網站內容
             var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
-            var document = await context.OpenAsync(this.Animation.Link);    
+            var document = await context.OpenAsync(this.Animation.Href);    
             // 取得動畫資訊
             var infos = document.QuerySelector("div.info_info").QuerySelectorAll("li");
             foreach (var info in infos)
@@ -45,12 +45,12 @@ namespace AnimationPlayer.Models
             var vodList = document.QuerySelector("div.fr.vodlist_index").QuerySelector(".main_list").Children;
             foreach (var vod in vodList)
             {
-                var links = vod.LastElementChild.QuerySelectorAll("li");
-                foreach (var link in links)
+                var hrefs = vod.LastElementChild.QuerySelectorAll("li");
+                foreach (var href in hrefs)
                 {
-                    if (link.FirstElementChild.TextContent == "站內")
+                    if (href.FirstElementChild.TextContent == "站內")
                     {
-                        string dataHref = link.FirstElementChild.GetAttribute("data-href").Replace("\n", string.Empty);
+                        string dataHref = href.FirstElementChild.GetAttribute("data-href").Replace("\n", string.Empty);
                         string[] data = dataHref.Split('/');
                         this.VodList.Add(new AnimationVodObject(vod.FirstElementChild.TextContent, "https://vpx.myself-bbs.com/" + data[data.Length - 2] + "/" +  data[data.Length - 1] + "/720p.m3u8"));
                         break;

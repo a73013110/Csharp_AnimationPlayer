@@ -16,7 +16,7 @@ using MahApps.Metro.Controls;
 using AnimationPlayer.Objects;
 using AnimationPlayer.Models;
 using Newtonsoft.Json;
-using AnimationPlayer.GlobalFunctions;
+using static AnimationPlayer.GlobalFunctions.AnimationRecentWatchJson;
 
 namespace AnimationPlayer.UserControls
 {
@@ -63,6 +63,8 @@ namespace AnimationPlayer.UserControls
             this.Grid_Loading.Visibility = Visibility.Collapsed;
             this.IC_Infos.ItemsSource = AnimationViewModel.Infos;
             this.IC_VodList.ItemsSource = AnimationViewModel.VodList;
+            if (this.AnimationViewModel.Animation.Recent_Watch_Index >= 0)
+                AnimationViewModel.VodList[this.AnimationViewModel.Animation.Recent_Watch_Index].Recent_Watch = Visibility.Visible; // 設置最近觀看
         }
         
         /// <summary>
@@ -70,22 +72,23 @@ namespace AnimationPlayer.UserControls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // 開啟影片視窗並播放
-            this.Dispatcher.BeginInvoke(new Action(() =>
+            await this.Dispatcher.BeginInvoke(new Action(() =>
             {
                 AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;
                 MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
                 mainWindow.Flyout_Animation.IsOpen = false;
                 mainWindow.Flyout_Video.Content = new VideoPlayerUserControl(animationVodObject);
                 mainWindow.Flyout_Video.IsOpen = true;
+                // 儲存近期播放
+                if (this.AnimationViewModel.Animation.Recent_Watch_Index >= 0)
+                    this.AnimationViewModel.VodList[this.AnimationViewModel.Animation.Recent_Watch_Index].Recent_Watch = Visibility.Collapsed;
+                animationVodObject.Recent_Watch = Visibility.Visible;
+                this.AnimationViewModel.Animation.Recent_Watch_Index = this.AnimationViewModel.VodList.IndexOf(animationVodObject);
+                UpdateRecentWatch(this.AnimationViewModel.Animation);    // 將近期播放更新到檔案
             }));
-            // 儲存近期播放
-            Task.Run(() =>
-            {
-                //this.AnimationViewModel.Animation.Link
-            });
         }
     }
 }
