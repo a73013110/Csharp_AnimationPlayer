@@ -16,6 +16,7 @@ using MahApps.Metro.Controls;
 using AnimationPlayer.Objects;
 using AnimationPlayer.Models;
 using Newtonsoft.Json;
+using AnimationPlayer.GlobalFunctions;
 
 namespace AnimationPlayer.UserControls
 {
@@ -71,6 +72,7 @@ namespace AnimationPlayer.UserControls
         /// <param name="e"></param>
         private void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            // 開啟影片視窗並播放
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
                 AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;
@@ -79,6 +81,11 @@ namespace AnimationPlayer.UserControls
                 mainWindow.Flyout_Video.Content = new VideoPlayerUserControl(animationVodObject);
                 mainWindow.Flyout_Video.IsOpen = true;
             }));
+            // 儲存近期播放
+            Task.Run(() =>
+            {
+                //this.AnimationViewModel.Animation.Link
+            });
         }
     }
 }

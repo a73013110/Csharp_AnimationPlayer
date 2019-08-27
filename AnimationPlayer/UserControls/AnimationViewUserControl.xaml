@@ -78,17 +78,26 @@
         <!--#endregion-->
 
         <!--#region 動畫列表-->
-        <!--<ListBox Grid.Row="2" Foreground="{DynamicResource AccentColorBrush4}" >
+        <!--<ListBox Grid.Row="2" Foreground="{DynamicResource AccentColorBrush4}" Margin="10, 20">
             <ListBox.Resources>
-                <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}"/>
+                <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal_Obvious_Vertical}"/>
             </ListBox.Resources>
-            <WrapPanel  Grid.Row="2" VerticalAlignment="Bottom" Orientation="Vertical">
-                <StackPanel Orientation="Horizontal" Margin="20, 10" ScrollViewer.CanContentScroll="True">
-                    <materialDesign:PackIcon Kind="Play" Width="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=StackPanel}}"
-                                                Height="{Binding Width, RelativeSource={RelativeSource Mode=Self}}" Foreground="#FFFF3838"/>
-                    <TextBlock Text="第 01 話 " VerticalAlignment="Center" FontSize="18" />
-                </StackPanel>
-            </WrapPanel>
+            <ListBoxItem Padding="0">
+                <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=ListBoxItem}}">
+                    <Grid Margin="8, 4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="8*" />
+                            <ColumnDefinition Width="30" />
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Kind="Play"  Grid.Column="0" Width="30" Foreground="#FFFF3838"                                 
+                                                 Height="{Binding Width, RelativeSource={RelativeSource Mode=Self}}"/>
+                        <TextBlock Text="第 01 話 " Padding="5, 0, 0, 0" Grid.Column="1" VerticalAlignment="Center" FontSize="18" />
+                        <materialDesign:PackIcon Kind="Recent" Grid.Column="2" Width="30" Foreground="{DynamicResource AccentBaseColorBrush}"
+                                                 Height="{Binding Width, RelativeSource={RelativeSource Mode=Self}}" />
+                    </Grid>
+                </Grid>
+            </ListBoxItem>
         </ListBox>-->
         <ListBox Grid.Row="2" x:Name="IC_VodList" Foreground="{DynamicResource AccentColorBrush4}" Margin="10, 20">
             <ListBox.Resources>
@@ -101,11 +110,20 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal"  Margin="0, 5">
-                        <materialDesign:PackIcon Kind="Play" Width="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=StackPanel}}"
-                                    Height="{Binding Width, RelativeSource={RelativeSource Mode=Self}}" Foreground="#FFFF3838"/>
-                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" FontSize="18" />
-                    </StackPanel>
+                    <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=ListBoxItem}}">
+                        <Grid Margin="8, 4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="8*" />
+                                <ColumnDefinition Width="30" />
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="Play"  Grid.Column="0" Width="30" Foreground="#FFFF3838"                                           
+                                                 Height="{Binding Width, RelativeSource={RelativeSource Mode=Self}}" />
+                            <TextBlock Text="{Binding Title}" Padding="5, 0, 0, 0" Grid.Column="1" VerticalAlignment="Center" FontSize="18" />
+                            <materialDesign:PackIcon Kind="Recent" Grid.Column="2" Width="30" Visibility="{Binding Recent_Watch}" Foreground="{DynamicResource AccentBaseColorBrush}"
+                                                 Height="{Binding Width, RelativeSource={RelativeSource Mode=Self}}" />
+                        </Grid>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

@@ -14,14 +14,14 @@ namespace AnimationPlayer.Models
         public AnimationViewModel(AnimationObject animation)
         {
             this.Animation = animation;
-            _ = GetAnimationInfoAndVodList();
+            _ = GetAnimationInfoAndVodList();            
         }
 
         public AnimationObject Animation { get; set; }  // 這個UserControl所顯示的動畫
         public event EventHandler GetAnimationInfoAndVodListCompleted;  // 動畫資訊及列表取得完畢事件
 
-        public List<AnimationVodObject> VodList = new List<AnimationVodObject>();
         public List<string> Infos = new List<string>();
+        public List<AnimationVodObject> VodList = new List<AnimationVodObject>();
 
         /// <summary>
         /// 取得動畫資訊及動畫列表

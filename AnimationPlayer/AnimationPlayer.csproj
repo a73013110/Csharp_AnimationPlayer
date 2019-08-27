@@ -125,6 +125,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GlobalFunctions\Json.cs" />
     <Compile Include="Models\MessageDialogModel.cs" />
     <Compile Include="Models\VideoPlayerModel.cs" />
     <Compile Include="Objects\CefBrowser.cs" />
