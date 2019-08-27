@@ -72,10 +72,10 @@
             
             <metro:Flyout x:Name="Flyout_Animation" Position="Left"
                           CloseButtonVisibility="Collapsed" TitleVisibility="Collapsed"
-                          Background="#FF1D1D1D" IsOpen="True"
+                          Background="#FF1D1D1D" IsOpen="False"
                           Width="400"
                           Height="{Binding ActualHeight, ElementName=metroWindow, Mode=OneWay}">
-                <UserControls:AnimationViewUserControl />
+                <!--<UserControls:AnimationViewUserControl />-->
             </metro:Flyout>
 
             <metro:Flyout x:Name="Flyout_Video" Position="Bottom"

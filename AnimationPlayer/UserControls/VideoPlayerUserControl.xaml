@@ -189,7 +189,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="影片串流資訊" Foreground="{DynamicResource AccentColorBrush4}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled">
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
                     <TextBlock x:Name="TB_StreamLinkLog" Margin="25, 15" TextWrapping="Wrap" Foreground="{DynamicResource AccentColorBrush3}" FontSize="18" />
                 </ScrollViewer>
             </Grid>
@@ -199,7 +199,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="播放器資訊" Foreground="{DynamicResource AccentColorBrush4}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled">
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
                     <TextBlock x:Name="TB_VLCMediaPlayerLog" Margin="25, 15" TextWrapping="Wrap" Foreground="{DynamicResource AccentColorBrush3}" FontSize="18" />
                 </ScrollViewer>
             </Grid>
