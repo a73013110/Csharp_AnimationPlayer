@@ -94,7 +94,7 @@ namespace AnimationPlayer.UserControls
             #endregion
 
             // 開新執行序執行, 以免視窗卡住
-            this.SettingMediaPlayerWithUIValue(() =>
+            Task.Run(() =>
             {
                 // 取得影片總時長, Timeout 10秒
                 this.Vlc_VideoPlayer.SourceProvider.MediaPlayer.Play(this.VideoPlayerModel.AnimationVod.Href);
@@ -105,7 +105,10 @@ namespace AnimationPlayer.UserControls
                 /// If判斷為避免在尚未執行"StartStreamLink"就關掉此Flyout時
                 /// 觸發的"Btn_VideoPlayerViewClose_Click"事件沒有正常關閉StreamLink
                 /// 導致關閉此Flyout後還照常播放影片的問題
-                if (((Flyout)this.Parent).IsOpen) this.StartStreamLink();
+                this.SettingMediaPlayerWithUIValue(() =>
+                {
+                    if (((Flyout)this.Parent).IsOpen) this.StartStreamLink();
+                });
             });
             //this.Vlc_VideoPlayer.SourceProvider.MediaPlayer.Play(this.VideoPlayerModel.AnimationVod.Link);
         }
