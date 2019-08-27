@@ -23,7 +23,7 @@ namespace AnimationPlayer.Objects
             {
                 CachePath = "./CefSharp/Cache",
                 //LogSeverity = LogSeverity.Verbose,
-                RemoteDebuggingPort = 12345,
+                //RemoteDebuggingPort = 12345,
             };
             Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
             CefSharpSettings.ShutdownOnExit = true;

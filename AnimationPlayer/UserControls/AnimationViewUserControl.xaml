@@ -99,7 +99,7 @@
                 </Grid>
             </ListBoxItem>
         </ListBox>-->
-        <ListBox Grid.Row="2" x:Name="IC_VodList" Foreground="{DynamicResource AccentColorBrush4}" Margin="10, 20">
+        <ListBox Grid.Row="2" x:Name="IC_VodList" Foreground="{DynamicResource AccentColorBrush4}" Margin="10, 20, 0, 20">
             <ListBox.Resources>
                 <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal_Obvious_Vertical}" />
             </ListBox.Resources>

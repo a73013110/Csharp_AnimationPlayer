@@ -68,7 +68,7 @@ namespace AnimationPlayer.UserControls
                 };
                 Process.Start(info);
             }
-            catch (Exception) { }            
+            catch (Exception e) { Console.WriteLine("並無執行StreamKink: " + e.Message); }            
         }
 
         private void RestartStreamLinkForSeeking(TimeSpan? offset = null)

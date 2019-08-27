@@ -74,14 +74,14 @@ namespace AnimationPlayer.UserControls
         /// <param name="e"></param>
         private async void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.Flyout_Animation.IsOpen = false;
+            mainWindow.Flyout_Video.Content = new VideoPlayerUserControl(animationVodObject);
+            mainWindow.Flyout_Video.IsOpen = true;
             // 開啟影片視窗並播放
             await this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;
-                MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-                mainWindow.Flyout_Animation.IsOpen = false;
-                mainWindow.Flyout_Video.Content = new VideoPlayerUserControl(animationVodObject);
-                mainWindow.Flyout_Video.IsOpen = true;
                 // 儲存近期播放
                 if (this.AnimationViewModel.Animation.Recent_Watch_Index >= 0)
                     this.AnimationViewModel.VodList[this.AnimationViewModel.Animation.Recent_Watch_Index].Recent_Watch = Visibility.Collapsed;
