@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AnimationPlayer.Objects;
 using MahApps.Metro.Controls;
+using AnimationPlayer.Reflections;
 
 namespace AnimationPlayer.UserControls
 {
@@ -23,15 +24,26 @@ namespace AnimationPlayer.UserControls
     /// </summary>
     public partial class AnimationPreviewUserControl : UserControl
     {
-        public AnimationPreviewUserControl()
-        {
-            InitializeComponent();
-        }
-
+        /// <summary>
+        /// 產生AnimationPreviewUserControl, 但不顯示移除按鈕
+        /// </summary>
+        /// <param name="animationObject"></param>
         public AnimationPreviewUserControl(AnimationObject animationObject)
         {
             this.DataContext = animationObject; // 設置Model
             InitializeComponent();
+        }
+        /// <summary>
+        /// 產生AnimationPreviewUserControl, 並顯示移除按鈕, 根據傳入的方法設定為該按鈕的Click事件
+        /// </summary>
+        /// <param name="animationObject">動畫資訊</param>
+        /// <param name="Btn_Remove_RoutedEventHandler">點擊刪除按鈕事件處理</param>
+        public AnimationPreviewUserControl(AnimationObject animationObject, RoutedEventHandler Btn_Remove_RoutedEventHandler)
+        {
+            this.DataContext = animationObject; // 設置Model
+            InitializeComponent();
+            this.Btn_Remove.Click += Btn_Remove_RoutedEventHandler;
+            this.Btn_Remove.Visibility = Visibility.Visible;
         }
 
         /// <summary>

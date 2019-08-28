@@ -1,10 +1,12 @@
-﻿using System;
+﻿using AnimationPlayer.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
@@ -12,6 +14,9 @@ namespace AnimationPlayer.UserControls
 {
     public partial class CrawlerUserControl
     {
+        /// <summary>
+        /// 搜尋框上浮動畫
+        /// </summary>
         private void FloatingSearchBoxInAnimation()
         {
             var timer = new DispatcherTimer();
@@ -33,6 +38,34 @@ namespace AnimationPlayer.UserControls
                 }
             });
             timer.Start();
+        }
+
+        private void AddAnimationPreviewUserControl(AnimationObject animationObject)
+        {
+            AnimationPreviewUserControl animationUserControl;
+            // 根據模式顯示對應的AnimationPreviewUserControl
+            switch (this.CurrentCrawlerMode)
+            {
+                case CrawlerMode.Favorite:  // 我的最愛
+                    animationUserControl = new AnimationPreviewUserControl(animationObject);
+                    break;
+                case CrawlerMode.Recent:    // 近期觀看
+                    animationUserControl = new AnimationPreviewUserControl(animationObject, (s, e)=>
+                    {
+                        Console.WriteLine("測試");
+                    });
+                    break;
+                default:    // 其餘的模式
+                    animationUserControl = new AnimationPreviewUserControl(animationObject);
+                    break;
+            }
+            // 將animationUserControl的高度與其parent進行綁定
+            Binding binding = new Binding("ActualHeight")
+            {
+                Source = this.SP_AnimationPanel // 設定欲Binding的ElementName
+            };
+            animationUserControl.SetBinding(UserControl.HeightProperty, binding);   // 設置Binding
+            this.SP_AnimationPanel.Children.Add(animationUserControl);  // 添加UserControl到視窗
         }
     }
 }

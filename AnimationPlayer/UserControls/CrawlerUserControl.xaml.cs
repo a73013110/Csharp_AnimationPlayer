@@ -16,14 +16,16 @@ namespace AnimationPlayer.UserControls
     /// </summary>
     public partial class CrawlerUserControl : UserControl
     {
+        private readonly CrawlerModel CrawlerModel;
+        private enum CrawlerMode {Search, Popular, Favorite, Recent};
+        private CrawlerMode CurrentCrawlerMode;
+
         public CrawlerUserControl()
         {
             this.DataContext = CrawlerModel = new CrawlerModel();
             InitializeComponent();
             CrawlerModel.Animations.CollectionChanged += AnimationsCollectionChangedEventHandler;
         }
-
-        private readonly CrawlerModel CrawlerModel;
 
         /// <summary>
         /// 用滑鼠滾輪滾動動畫Panel
@@ -61,13 +63,7 @@ namespace AnimationPlayer.UserControls
                         ((Image)this.Grid_Background.Children[i]).Source = new ImageSourceConverter().ConvertFromString(CrawlerModel.Animations[i].Image_source) as ImageSource;
                     }
                 }
-                AnimationPreviewUserControl animationUserControl = new AnimationPreviewUserControl((AnimationObject)e.NewItems[0]); // 產生UserControl
-                Binding binding = new Binding("ActualHeight")   // 設置欲Binding的Property
-                {
-                    Source = this.SP_AnimationPanel // 設定欲Binding的ElementName
-                };
-                animationUserControl.SetBinding(UserControl.HeightProperty, binding);   // 設置Binding
-                this.SP_AnimationPanel.Children.Add(animationUserControl);  // 添加UserControl到視窗
+                this.AddAnimationPreviewUserControl((AnimationObject)e.NewItems[0]);    // 產生UserControl
             }
             // 若清除所有動畫, 將UI上的UserControl清除
             else if (e.Action == NotifyCollectionChangedAction.Reset)
@@ -84,6 +80,7 @@ namespace AnimationPlayer.UserControls
         private void Btn_Search_Click(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(this.TB_Search.Text)) return; // 若搜尋的字串為空或只有單純空白
+            this.CurrentCrawlerMode = CrawlerMode.Search;
             _ = this.CrawlerModel.GetSearchAnimations(this.TB_Search.Text); // 搜尋動畫並顯示
         }
 
@@ -107,6 +104,7 @@ namespace AnimationPlayer.UserControls
         /// <param name="e"></param>
         public void Btn_PopularAnimation_Click(object sender, RoutedEventArgs e)
         {
+            this.CurrentCrawlerMode = CrawlerMode.Popular;
             _ = this.CrawlerModel.GetPopularAnimations();
         }
 
@@ -117,6 +115,7 @@ namespace AnimationPlayer.UserControls
         /// <param name="e"></param>
         public void Btn_FavoriteAnimation_Click(object sender, RoutedEventArgs e)
         {
+            this.CurrentCrawlerMode = CrawlerMode.Favorite;
 
         }
 
@@ -127,6 +126,7 @@ namespace AnimationPlayer.UserControls
         /// <param name="e"></param>
         public void Btn_RecentAnimation_Click(object sender, RoutedEventArgs e)
         {
+            this.CurrentCrawlerMode = CrawlerMode.Recent;
             this.CrawlerModel.GetRecentAnimations();
         }
     }
