@@ -16,6 +16,9 @@ using AngleSharp.Html.Parser;
 using CefSharp;
 using CefSharp.OffScreen;
 using System.Threading;
+using static AnimationPlayer.GlobalFunctions.AnimationRecentWatchJson;
+using System.Collections.Generic;
+using System.Windows.Threading;
 
 namespace AnimationPlayer.Models
 {
@@ -30,31 +33,7 @@ namespace AnimationPlayer.Models
         public ObservableCollection<AnimationObject> Animations { get; set; } = new ObservableCollection<AnimationObject>();
 
         /// <summary>
-        /// 取得熱門動畫，儲存並顯示
-        /// </summary>
-        /// <returns></returns>
-        public async Task GetPopularAnimations()
-        {
-            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.PB_Progress.Visibility = Visibility.Visible;
-            mainWindow.SB_Hint.MessageQueue.Enqueue("清空動畫列表", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            this.Animations.Clear();    // 重置Animation
-            mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得熱門動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            string URL = "https://myself-bbs.com/portal.php"; // 動畫網站
-            var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());   // 產生瀏覽網頁的物件
-            var document = await context.OpenAsync(URL);    // 取得網站內容
-            var hotAnimations = document.QuerySelector("#portal_block_953_content").QuerySelectorAll("li"); // 從網站內取得熱門動畫
-            // 取得動畫的名稱及連結, 並加入UserControl
-            foreach (var hotAnimation in hotAnimations)
-            {
-                _ = this.AddAnimation(((IHtmlAnchorElement)hotAnimation.FirstElementChild).Href);
-            }
-            mainWindow.SB_Hint.MessageQueue.Enqueue("熱門動畫取得完畢, 等待介面顯示...", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            mainWindow.PB_Progress.Visibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// 取得搜尋動畫，儲存並顯示
+        /// 取得搜尋動畫
         /// </summary>
         /// <returns></returns>
         private readonly CefBrowser Cef = new CefBrowser();
@@ -136,6 +115,50 @@ namespace AnimationPlayer.Models
                 mainWindow.DH_Dialog.IsOpen = true;
             }
             else mainWindow.SB_Hint.MessageQueue.Enqueue("搜尋動畫取得完畢, 等待介面顯示...", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            mainWindow.PB_Progress.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 取得熱門動畫
+        /// </summary>
+        /// <returns></returns>
+        public async Task GetPopularAnimations()
+        {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.PB_Progress.Visibility = Visibility.Visible;
+            mainWindow.SB_Hint.MessageQueue.Enqueue("清空動畫列表", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            this.Animations.Clear();    // 重置Animation
+            mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得熱門動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            string URL = "https://myself-bbs.com/portal.php"; // 動畫網站
+            var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());   // 產生瀏覽網頁的物件
+            var document = await context.OpenAsync(URL);    // 取得網站內容
+            var hotAnimations = document.QuerySelector("#portal_block_953_content").QuerySelectorAll("li"); // 從網站內取得熱門動畫
+            // 取得動畫的名稱及連結, 並加入UserControl
+            foreach (var hotAnimation in hotAnimations)
+            {
+                _ = this.AddAnimation(((IHtmlAnchorElement)hotAnimation.FirstElementChild).Href);
+            }
+            mainWindow.SB_Hint.MessageQueue.Enqueue("熱門動畫取得完畢, 等待介面顯示...", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            mainWindow.PB_Progress.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 取得最近觀看動畫
+        /// </summary>
+        /// <returns></returns>
+        public void GetRecentAnimations()
+        {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.PB_Progress.Visibility = Visibility.Visible;
+            mainWindow.SB_Hint.MessageQueue.Enqueue("清空動畫列表", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            this.Animations.Clear();    // 重置Animation
+            mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得熱門動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            HashSet<AnimationObject> recentWatch = GetRecentWatch();
+            foreach (AnimationObject animation in recentWatch)
+            {
+                Animations.Add(animation);
+            }
+            mainWindow.SB_Hint.MessageQueue.Enqueue("熱門動畫取得完畢, 等待介面顯示...", "確認", () => mainWindow.SB_Hint.IsActive = false);
             mainWindow.PB_Progress.Visibility = Visibility.Collapsed;
         }
     }

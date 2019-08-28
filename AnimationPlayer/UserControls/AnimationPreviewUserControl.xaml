@@ -6,21 +6,25 @@
              xmlns:local="clr-namespace:AnimationPlayer.UserControls"
              xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:converter="clr-namespace:AnimationPlayer.Reflections"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="179">
 
     <!--<UserControl.DataContext>
         <local:AnimationObject />
     </UserControl.DataContext>-->
+    <UserControl.Resources>
+        <converter:ImageSourceAsync_Converter x:Key="ImageSourceAsyncConverter" />
+    </UserControl.Resources>
 
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
         <materialDesign:Card Margin="20" Background="{x:Null}">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <metro:ProgressRing x:Name="PR_Progress" IsActive="True" Foreground="{DynamicResource WindowTitleColorBrush}" />
-                <Image x:Name="Image">
-                    <Image.Source>
-                        <BitmapImage x:Name="Bitmap_Image" UriSource="{Binding Image_source}" DownloadCompleted="Bitmap_Image_DownloadCompleted" />
-                    </Image.Source>
+                <Image x:Name="Image" Source="{Binding Image_source, Converter={StaticResource ImageSourceAsyncConverter}, IsAsync=True}" >
+                    <!--<Image.Source>
+                        <BitmapImage x:Name="Bitmap_Image" UriSource="{Binding Image_source, IsAsync=True}" DownloadCompleted="Bitmap_Image_DownloadCompleted" />
+                    </Image.Source>-->
                 </Image>
                 <Border x:Name="BD_ImageCover" Opacity="0"
                         Width="{Binding ActualWidth, ElementName=Image, Mode=OneWay}"

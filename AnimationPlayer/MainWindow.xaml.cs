@@ -1,27 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.IO;
-using MahApps.Metro.Controls;
-using System.Threading;
-using AnimationPlayer.UserControls;
+﻿using AnimationPlayer.UserControls;
 using CefSharp;
-using CefSharp.OffScreen;
-using AnimationPlayer.Objects;
-using System.Windows.Media.Animation;
-using System.Net.Cache;
-using System.Windows.Interop;
-using CalcBinding;
+using MahApps.Metro.Controls;
+using System;
+using System.Windows;
 
 namespace AnimationPlayer
 {
@@ -63,7 +44,7 @@ namespace AnimationPlayer
                 if (videoPlayerUserControl != null) videoPlayerUserControl.KillStreamLink();
                 Environment.Exit(0);    // 關閉所有執行序
             }
-            catch(Exception exception) { Console.WriteLine("視窗關閉時發現例外狀況: " + exception); }
+            catch (Exception exception) { Console.WriteLine("視窗關閉時發現例外狀況: " + exception); }
         }
     }
 }

@@ -16,7 +16,7 @@ namespace AnimationPlayer.GlobalFunctions
         /// <summary>
         /// 更新近期觀看的動畫至Json檔
         /// </summary>
-        /// <param name="animationObject"></param>
+        /// <param name="animationObject">欲更新的動畫</param>
         public static void UpdateRecentWatch(AnimationObject animationObject)
         {
             // 檢索速度最快, 使用的HashSet必須自定義Comparer
@@ -30,7 +30,7 @@ namespace AnimationPlayer.GlobalFunctions
         /// 檢查該動畫近期是否看過
         /// </summary>
         /// <param name="href">動畫網址</param>
-        /// <returns></returns>
+        /// <returns>If最近看過: return欲取得的動畫; Else: return NULL</returns>
         public static AnimationObject CheckRecentWatch(string href)
         {
             // 檢索速度最快, 使用的HashSet必須自定義Comparer
@@ -38,6 +38,15 @@ namespace AnimationPlayer.GlobalFunctions
             AnimationObject animationObject = new AnimationObject { Href = href };
             if (animationList.TryGetValue(animationObject, out animationObject)) return animationObject;
             return null;
+        }
+
+        /// <summary>
+        /// 取得最近觀看動畫
+        /// </summary>
+        /// <returns>最近所有看過的動畫</returns>
+        public static HashSet<AnimationObject> GetRecentWatch()
+        {
+            return ReadFromFile<HashSet<AnimationObject>>(RecentWatchPath).ToHashSet(new AnimationObjectComparer());
         }
     }
 

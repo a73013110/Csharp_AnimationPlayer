@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
 namespace AnimationPlayer.Reflections
 {
@@ -44,6 +45,23 @@ namespace AnimationPlayer.Reflections
             var bmp = value as System.Drawing.Bitmap;
             if (bmp == null) return null;
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ImageSourceAsync_Converter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null) return null;
+            return new BitmapImage(new Uri(value.ToString()));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

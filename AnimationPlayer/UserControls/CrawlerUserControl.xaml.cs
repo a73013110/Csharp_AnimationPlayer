@@ -1,25 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using AnimationPlayer.Models;
+using AnimationPlayer.Objects;
+using System;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using AnimationPlayer.Models;
-using AnimationPlayer.Objects;
-using MaterialDesignThemes.Wpf;
-using System.Threading;
 
 namespace AnimationPlayer.UserControls
 {
@@ -77,7 +65,7 @@ namespace AnimationPlayer.UserControls
                 Binding binding = new Binding("ActualHeight")   // 設置欲Binding的Property
                 {
                     Source = this.SP_AnimationPanel // 設定欲Binding的ElementName
-                };  
+                };
                 animationUserControl.SetBinding(UserControl.HeightProperty, binding);   // 設置Binding
                 this.SP_AnimationPanel.Children.Add(animationUserControl);  // 添加UserControl到視窗
             }
@@ -85,7 +73,7 @@ namespace AnimationPlayer.UserControls
             else if (e.Action == NotifyCollectionChangedAction.Reset)
             {
                 this.SP_AnimationPanel.Children.Clear();
-            }            
+            }
         }
 
         /// <summary>
@@ -139,7 +127,7 @@ namespace AnimationPlayer.UserControls
         /// <param name="e"></param>
         public void Btn_RecentAnimation_Click(object sender, RoutedEventArgs e)
         {
-
+            this.CrawlerModel.GetRecentAnimations();
         }
     }
 }
