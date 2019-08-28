@@ -150,15 +150,22 @@ namespace AnimationPlayer.Models
         {
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.PB_Progress.Visibility = Visibility.Visible;
-            mainWindow.SB_Hint.MessageQueue.Enqueue("清空動畫列表", "確認", () => mainWindow.SB_Hint.IsActive = false);
             this.Animations.Clear();    // 重置Animation
-            mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得熱門動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得最近觀看動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
             HashSet<AnimationObject> recentWatch = GetRecentWatch();
-            foreach (AnimationObject animation in recentWatch)
+            if (recentWatch.Count > 0)
             {
-                Animations.Add(animation);
+                foreach (AnimationObject animation in recentWatch)
+                {
+                    Animations.Add(animation);
+                }
+                mainWindow.SB_Hint.MessageQueue.Enqueue("最近觀看動畫取得完畢, 等待介面顯示...", "確認", () => mainWindow.SB_Hint.IsActive = false);
             }
-            mainWindow.SB_Hint.MessageQueue.Enqueue("熱門動畫取得完畢, 等待介面顯示...", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            else
+            {
+                ((MessageDialogUserControl)mainWindow.DH_Dialog.DialogContent).MessageDialogModel.Message = "近期無觀看動畫";
+                mainWindow.DH_Dialog.IsOpen = true;
+            }
             mainWindow.PB_Progress.Visibility = Visibility.Collapsed;
         }
     }

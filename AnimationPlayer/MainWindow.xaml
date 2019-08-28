@@ -14,7 +14,7 @@
         mc:Ignorable="d"
                    
         ShowIconOnTitleBar="False" Icon="D:/Program Library/Csharp_AnimationPlayer/icon.png"
-        Height="750" Width="1280"
+        Height="768" Width="1280"
         BorderThickness="0"
                       
         WindowStartupLocation="CenterScreen" GlowBrush="Black" MinWidth="720" MinHeight="405" Closing="MetroWindow_Closing">

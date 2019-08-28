@@ -25,7 +25,7 @@ namespace AnimationPlayer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public string StreamLink_hls_segment_threads {
             get {
                 return ((string)(this["StreamLink_hls_segment_threads"]));

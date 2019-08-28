@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="StreamLink_hls_segment_threads" Type="System.String" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="StreamLink_video_querity" Type="System.String" Scope="User">
       <Value Profile="(Default)">best</Value>

@@ -19,6 +19,12 @@ namespace AnimationPlayer.GlobalFunctions
         /// <returns>指定型別</returns>
         public static T ReadFromFile<T>(string path)
         {
+            // 若沒有該檔案, 直接建立一個
+            if (!File.Exists(path))
+            {
+                FileStream file = File.Create(path);
+                return default(T);
+            }
             return JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
         }
         /// <summary>

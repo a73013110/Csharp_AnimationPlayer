@@ -20,8 +20,17 @@ namespace AnimationPlayer.GlobalFunctions
         public static void UpdateRecentWatch(AnimationObject animationObject)
         {
             // 檢索速度最快, 使用的HashSet必須自定義Comparer
-            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(RecentWatchPath).ToHashSet(new AnimationObjectComparer());
-            if (animationList.Contains(animationObject)) animationList.Remove(animationObject); // 若資料已存在HashSet, 先刪除
+            var recentWatch = ReadFromFile<HashSet<AnimationObject>>(RecentWatchPath);
+            HashSet<AnimationObject> animationList;
+            if (recentWatch == null)
+            {
+                animationList = new HashSet<AnimationObject>(new AnimationObjectComparer());
+            }
+            else
+            {
+                animationList = recentWatch.ToHashSet(new AnimationObjectComparer());
+                if (animationList.Contains(animationObject)) animationList.Remove(animationObject); // 若資料已存在HashSet, 先刪除
+            }
             animationList.Add(animationObject); // 添加資料進去HashSet
             WriteToFile(animationList, RecentWatchPath);  // 儲存
         }
@@ -34,10 +43,15 @@ namespace AnimationPlayer.GlobalFunctions
         public static AnimationObject CheckRecentWatch(string href)
         {
             // 檢索速度最快, 使用的HashSet必須自定義Comparer
-            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(RecentWatchPath).ToHashSet(new AnimationObjectComparer());
-            AnimationObject animationObject = new AnimationObject { Href = href };
-            if (animationList.TryGetValue(animationObject, out animationObject)) return animationObject;
-            return null;
+            var recentWatch = ReadFromFile<HashSet<AnimationObject>>(RecentWatchPath);
+            if (recentWatch == null) return null;
+            else
+            {
+                HashSet<AnimationObject> animationList = recentWatch.ToHashSet(new AnimationObjectComparer());
+                AnimationObject animationObject = new AnimationObject { Href = href };
+                if (animationList.TryGetValue(animationObject, out animationObject)) return animationObject;
+                return null;
+            }            
         }
 
         /// <summary>
@@ -46,7 +60,9 @@ namespace AnimationPlayer.GlobalFunctions
         /// <returns>最近所有看過的動畫</returns>
         public static HashSet<AnimationObject> GetRecentWatch()
         {
-            return ReadFromFile<HashSet<AnimationObject>>(RecentWatchPath).ToHashSet(new AnimationObjectComparer());
+            var recentWatch = ReadFromFile<HashSet<AnimationObject>>(RecentWatchPath);
+            if (recentWatch == null) return new HashSet<AnimationObject>(new AnimationObjectComparer());
+            else return recentWatch.ToHashSet(new AnimationObjectComparer());
         }
     }
 
