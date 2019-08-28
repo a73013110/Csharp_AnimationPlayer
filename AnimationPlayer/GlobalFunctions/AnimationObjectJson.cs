@@ -15,16 +15,16 @@ namespace AnimationPlayer.GlobalFunctions
         /// <summary>
         ///  動畫路徑的Key
         /// </summary>
-        public enum Animation
+        public enum Mode
         {
             RecentWatch
         }
         /// <summary>
         /// 動畫路徑的Dictionary
         /// </summary>
-        public static Dictionary<Animation, string> FilePath = new Dictionary<Animation, string>
+        public static Dictionary<Mode, string> FilePath = new Dictionary<Mode, string>
         {
-            { Animation.RecentWatch, @"./Recent_Watch.json" },
+            { Mode.RecentWatch, @"./Recent_Watch.json" },
         };
 
         /// <summary>

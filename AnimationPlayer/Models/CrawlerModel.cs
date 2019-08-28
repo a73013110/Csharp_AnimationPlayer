@@ -152,7 +152,7 @@ namespace AnimationPlayer.Models
             mainWindow.PB_Progress.Visibility = Visibility.Visible;
             this.Animations.Clear();    // 重置Animation
             mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得最近觀看動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            HashSet<AnimationObject> recentWatch = GetRecentWatch(FilePath[Animation.RecentWatch]);
+            HashSet<AnimationObject> recentWatch = GetRecentWatch(FilePath[Mode.RecentWatch]);
             if (recentWatch.Count > 0)
             {
                 foreach (AnimationObject animation in recentWatch)

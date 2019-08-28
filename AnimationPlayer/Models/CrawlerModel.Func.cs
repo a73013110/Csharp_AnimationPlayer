@@ -18,7 +18,7 @@ namespace AnimationPlayer.Models
         /// <returns></returns>
         private async Task AddAnimation(string href)
         {
-            AnimationObject recentWatch = CheckRecentWatch(href, FilePath[Animation.RecentWatch]);
+            AnimationObject recentWatch = CheckRecentWatch(href, FilePath[Mode.RecentWatch]);
             if (recentWatch != null) Animations.Add(recentWatch);
             else
             {
