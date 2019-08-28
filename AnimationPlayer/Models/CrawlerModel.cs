@@ -16,7 +16,7 @@ using AngleSharp.Html.Parser;
 using CefSharp;
 using CefSharp.OffScreen;
 using System.Threading;
-using static AnimationPlayer.GlobalFunctions.AnimationRecentWatchJson;
+using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 using System.Collections.Generic;
 using System.Windows.Threading;
 
@@ -152,7 +152,7 @@ namespace AnimationPlayer.Models
             mainWindow.PB_Progress.Visibility = Visibility.Visible;
             this.Animations.Clear();    // 重置Animation
             mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得最近觀看動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            HashSet<AnimationObject> recentWatch = GetRecentWatch();
+            HashSet<AnimationObject> recentWatch = GetRecentWatch(FilePath[Animation.RecentWatch]);
             if (recentWatch.Count > 0)
             {
                 foreach (AnimationObject animation in recentWatch)

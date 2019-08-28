@@ -16,7 +16,7 @@ using MahApps.Metro.Controls;
 using AnimationPlayer.Objects;
 using AnimationPlayer.Models;
 using Newtonsoft.Json;
-using static AnimationPlayer.GlobalFunctions.AnimationRecentWatchJson;
+using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 
 namespace AnimationPlayer.UserControls
 {
@@ -90,7 +90,7 @@ namespace AnimationPlayer.UserControls
                     this.AnimationViewModel.VodList[this.AnimationViewModel.Animation.Recent_Watch_Index].Recent_Watch = Visibility.Collapsed;
                 animationVodObject.Recent_Watch = Visibility.Visible;
                 this.AnimationViewModel.Animation.Recent_Watch_Index = this.AnimationViewModel.VodList.IndexOf(animationVodObject);
-                UpdateRecentWatch(this.AnimationViewModel.Animation);    // 將近期播放更新到檔案
+                UpdateRecentWatch(this.AnimationViewModel.Animation, FilePath[Animation.RecentWatch]);    // 將近期播放更新到檔案
             });            
         }
     }

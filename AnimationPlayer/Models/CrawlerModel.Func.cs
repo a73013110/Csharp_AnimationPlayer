@@ -2,7 +2,7 @@
 using AngleSharp.Html.Dom;
 using System.Threading.Tasks;
 using AnimationPlayer.Objects;
-using static AnimationPlayer.GlobalFunctions.AnimationRecentWatchJson;
+using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 using System;
 
 namespace AnimationPlayer.Models
@@ -18,7 +18,7 @@ namespace AnimationPlayer.Models
         /// <returns></returns>
         private async Task AddAnimation(string href)
         {
-            AnimationObject recentWatch = CheckRecentWatch(href);
+            AnimationObject recentWatch = CheckRecentWatch(href, FilePath[Animation.RecentWatch]);
             if (recentWatch != null) Animations.Add(recentWatch);
             else
             {

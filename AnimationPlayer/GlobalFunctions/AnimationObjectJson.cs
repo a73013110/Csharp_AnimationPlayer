@@ -10,44 +10,59 @@ using static AnimationPlayer.GlobalFunctions.Json;
 
 namespace AnimationPlayer.GlobalFunctions
 {
-    public static class AnimationRecentWatchJson
+    public static class AnimationObjectJson
     {
-        public static string RecentWatchPath = @"./Recent_Watch.json";
+        /// <summary>
+        ///  動畫路徑的Key
+        /// </summary>
+        public enum Animation
+        {
+            RecentWatch
+        }
+        /// <summary>
+        /// 動畫路徑的Dictionary
+        /// </summary>
+        public static Dictionary<Animation, string> FilePath = new Dictionary<Animation, string>
+        {
+            { Animation.RecentWatch, @"./Recent_Watch.json" },
+        };
+
         /// <summary>
         /// 更新近期觀看的動畫至Json檔
         /// </summary>
         /// <param name="animationObject">欲更新的動畫</param>
-        public static void UpdateRecentWatch(AnimationObject animationObject)
+        /// <param name="path">檔案路徑</param>
+        public static void UpdateRecentWatch(AnimationObject animationObject, string path)
         {
             // 檢索速度最快, 使用的HashSet必須自定義Comparer
-            var recentWatch = ReadFromFile<HashSet<AnimationObject>>(RecentWatchPath);
-            HashSet<AnimationObject> animationList;
-            if (recentWatch == null)
+            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(path);
+            if (animationList == null)
             {
                 animationList = new HashSet<AnimationObject>(new AnimationObjectComparer());
             }
             else
             {
-                animationList = recentWatch.ToHashSet(new AnimationObjectComparer());
+                animationList = animationList.ToHashSet(new AnimationObjectComparer());
                 if (animationList.Contains(animationObject)) animationList.Remove(animationObject); // 若資料已存在HashSet, 先刪除
             }
             animationList.Add(animationObject); // 添加資料進去HashSet
-            WriteToFile(animationList, RecentWatchPath);  // 儲存
+            WriteToFile(animationList, path);  // 儲存
         }
 
         /// <summary>
         /// 檢查該動畫近期是否看過
         /// </summary>
         /// <param name="href">動畫網址</param>
+        /// <param name="path">檔案路徑</param>
         /// <returns>If最近看過: return欲取得的動畫; Else: return NULL</returns>
-        public static AnimationObject CheckRecentWatch(string href)
+        public static AnimationObject CheckRecentWatch(string href, string path)
         {
             // 檢索速度最快, 使用的HashSet必須自定義Comparer
-            var recentWatch = ReadFromFile<HashSet<AnimationObject>>(RecentWatchPath);
-            if (recentWatch == null) return null;
+            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(path);
+            if (animationList == null) return null;
             else
             {
-                HashSet<AnimationObject> animationList = recentWatch.ToHashSet(new AnimationObjectComparer());
+                animationList = animationList.ToHashSet(new AnimationObjectComparer());
                 AnimationObject animationObject = new AnimationObject { Href = href };
                 if (animationList.TryGetValue(animationObject, out animationObject)) return animationObject;
                 return null;
@@ -57,12 +72,13 @@ namespace AnimationPlayer.GlobalFunctions
         /// <summary>
         /// 取得最近觀看動畫
         /// </summary>
+        /// <param name="path">檔案路徑</param>
         /// <returns>最近所有看過的動畫</returns>
-        public static HashSet<AnimationObject> GetRecentWatch()
+        public static HashSet<AnimationObject> GetRecentWatch(string path)
         {
-            var recentWatch = ReadFromFile<HashSet<AnimationObject>>(RecentWatchPath);
-            if (recentWatch == null) return new HashSet<AnimationObject>(new AnimationObjectComparer());
-            else return recentWatch.ToHashSet(new AnimationObjectComparer());
+            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(path);
+            if (animationList == null) return new HashSet<AnimationObject>(new AnimationObjectComparer());
+            else return animationList.ToHashSet(new AnimationObjectComparer());
         }
     }
 
