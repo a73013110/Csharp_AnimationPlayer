@@ -81,7 +81,7 @@
             <metro:Flyout x:Name="Flyout_Video" Position="Bottom"
                           CloseButtonVisibility="Collapsed" TitleVisibility="Collapsed" 
                           Background="#FF1D1D1D" IsOpen="False"
-                          Height="{cal:Binding ActualHeight-30, ElementName=metroWindow}">
+                          Height="{cal:Binding (ActualHeight-30), ElementName=metroWindow}">
                 <!--<UserControls:VideoPlayerUserControl />-->
             </metro:Flyout>
 

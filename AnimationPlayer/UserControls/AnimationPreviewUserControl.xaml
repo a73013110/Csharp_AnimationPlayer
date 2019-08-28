@@ -7,6 +7,7 @@
              xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:converter="clr-namespace:AnimationPlayer.Reflections"
+             xmlns:cal="clr-namespace:CalcBinding;assembly=CalcBinding"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="179">
 
@@ -17,14 +18,14 @@
         <converter:AnimationPreviewImageAsync_Converter x:Key="AnimationPreviewImageAsyncConverter" />
     </UserControl.Resources>
 
-    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-        <materialDesign:Card Margin="20" Background="{x:Null}">
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid>
+        <materialDesign:Card Margin="20" Background="{x:Null}" VerticalAlignment="Stretch">
+            <Grid>
                 <metro:ProgressRing x:Name="PR_Progress" IsActive="True" Foreground="{DynamicResource WindowTitleColorBrush}" />
                 <Image x:Name="Image_Background" Source="{Binding Image_source, Converter={StaticResource AnimationPreviewImageAsyncConverter}, ConverterParameter={x:Reference PR_Progress}, IsAsync=True}" />
                 <Border x:Name="BD_ImageCover" Opacity="0"
-                        Width="{Binding ActualWidth, ElementName=Image_Background, Mode=OneWay}"
-                        Height="{Binding ActualHeight, ElementName=Image_Background, Mode=OneWay}"
+                        Width="{Binding ActualWidth, ElementName=Image_Background}"
+                        Height="{Binding ActualHeight, ElementName=Image_Background}"
                         MouseEnter="BD_ImageCover_MouseEnter"
                         MouseLeave="BD_ImageCover_MouseLeave">
                     <Border.Background>
@@ -37,8 +38,8 @@
                 <TextBlock Text="{Binding Name}"                           
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            FontSize="22" Foreground="White"
-                           Opacity="{Binding Opacity, ElementName=BD_ImageCover, Mode=OneWay}"
-                           MaxWidth="{Binding ActualWidth, ElementName=Image_Background, Mode=OneWay}"
+                           Opacity="{Binding Opacity, ElementName=BD_ImageCover}"
+                           MaxWidth="{cal:Binding (ActualWidth*0.9), ElementName=Image_Background}"
                            IsHitTestVisible="False" TextWrapping="WrapWithOverflow"/>
                 <Button x:Name="Btn_Watch"
                         Style="{StaticResource MaterialDesignIconButton}"
