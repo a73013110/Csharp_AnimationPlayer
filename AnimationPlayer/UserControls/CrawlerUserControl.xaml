@@ -93,7 +93,7 @@
         </materialDesign:Card>
         
         <ScrollViewer x:Name="SV_AnimationViewer" Grid.Row="2" 
-                      HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" CanContentScroll="True"
+                      HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden" CanContentScroll="True"
                       PreviewMouseWheel="SV_AnimationViewer_PreviewMouseWheel">
             <ScrollViewer.Resources>
                 <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal_Obvious_Horizontal}" />
