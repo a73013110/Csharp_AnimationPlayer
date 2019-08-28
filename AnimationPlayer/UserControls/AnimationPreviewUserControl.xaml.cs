@@ -61,16 +61,6 @@ namespace AnimationPlayer.UserControls
         }
 
         /// <summary>
-        /// 當圖片下載完成, 將載入提示的Progress停止
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Bitmap_Image_DownloadCompleted(object sender, EventArgs e)
-        {
-            this.PR_Progress.IsActive = false;
-        }
-
-        /// <summary>
         /// 欲觀看動畫的播放按鈕點擊事件
         /// </summary>
         /// <param name="sender"></param>

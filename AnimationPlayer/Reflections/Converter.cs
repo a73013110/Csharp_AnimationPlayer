@@ -54,14 +54,16 @@ namespace AnimationPlayer.Reflections
     }
 
     /// <summary>
-    /// 
+    /// AnimationPreview的背景圖片Converter, 主要為用於實現Async
     /// </summary>
-    public class ImageSourceAsync_Converter : IValueConverter
+    public class AnimationPreviewImageAsync_Converter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return null;
-            return new BitmapImage(new Uri(value.ToString()));
+            BitmapImage BI = new BitmapImage(new Uri(value.ToString()));
+            BI.DownloadCompleted += (e, s) => ((MahApps.Metro.Controls.ProgressRing)parameter).IsActive = false;    // 當圖片下載完成, ProgressRing不再執行
+            return BI;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

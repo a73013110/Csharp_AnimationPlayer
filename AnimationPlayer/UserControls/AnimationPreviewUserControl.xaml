@@ -14,21 +14,17 @@
         <local:AnimationObject />
     </UserControl.DataContext>-->
     <UserControl.Resources>
-        <converter:ImageSourceAsync_Converter x:Key="ImageSourceAsyncConverter" />
+        <converter:AnimationPreviewImageAsync_Converter x:Key="AnimationPreviewImageAsyncConverter" />
     </UserControl.Resources>
 
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
         <materialDesign:Card Margin="20" Background="{x:Null}">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <metro:ProgressRing x:Name="PR_Progress" IsActive="True" Foreground="{DynamicResource WindowTitleColorBrush}" />
-                <Image x:Name="Image" Source="{Binding Image_source, Converter={StaticResource ImageSourceAsyncConverter}, IsAsync=True}" >
-                    <!--<Image.Source>
-                        <BitmapImage x:Name="Bitmap_Image" UriSource="{Binding Image_source, IsAsync=True}" DownloadCompleted="Bitmap_Image_DownloadCompleted" />
-                    </Image.Source>-->
-                </Image>
+                <Image x:Name="Image_Background" Source="{Binding Image_source, Converter={StaticResource AnimationPreviewImageAsyncConverter}, ConverterParameter={x:Reference PR_Progress}, IsAsync=True}" />
                 <Border x:Name="BD_ImageCover" Opacity="0"
-                        Width="{Binding ActualWidth, ElementName=Image, Mode=OneWay}"
-                        Height="{Binding ActualHeight, ElementName=Image, Mode=OneWay}"
+                        Width="{Binding ActualWidth, ElementName=Image_Background, Mode=OneWay}"
+                        Height="{Binding ActualHeight, ElementName=Image_Background, Mode=OneWay}"
                         MouseEnter="BD_ImageCover_MouseEnter"
                         MouseLeave="BD_ImageCover_MouseLeave">
                     <Border.Background>
@@ -42,7 +38,7 @@
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            FontSize="22" Foreground="White"
                            Opacity="{Binding Opacity, ElementName=BD_ImageCover, Mode=OneWay}"
-                           MaxWidth="{Binding ActualWidth, ElementName=Image, Mode=OneWay}"
+                           MaxWidth="{Binding ActualWidth, ElementName=Image_Background, Mode=OneWay}"
                            IsHitTestVisible="False" TextWrapping="WrapWithOverflow"/>
                 <Button x:Name="Btn_Watch"
                         Style="{StaticResource MaterialDesignIconButton}"
