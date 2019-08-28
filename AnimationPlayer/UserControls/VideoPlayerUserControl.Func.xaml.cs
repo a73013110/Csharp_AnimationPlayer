@@ -15,7 +15,7 @@ namespace AnimationPlayer.UserControls
         /// <param name="action"></param>
         private void SettingUI(Action action)
         {
-            Dispatcher.BeginInvoke(action);
+            Dispatcher.InvokeAsync(action);
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace AnimationPlayer.UserControls
         /// <param name="action"></param>
         private void SettingMediaPlayerWithUIValue(Action action)
         {
-            Dispatcher.BeginInvoke(action);
+            Dispatcher.InvokeAsync(action);
         }
 
         /// <summary>

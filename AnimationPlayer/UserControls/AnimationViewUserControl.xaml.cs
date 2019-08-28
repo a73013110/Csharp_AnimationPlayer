@@ -76,13 +76,13 @@ namespace AnimationPlayer.UserControls
         {
             AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;
             // 開啟影片視窗並播放
-            this.Dispatcher.BeginInvoke(new Action(() =>
+            this.Dispatcher.InvokeAsync(() =>
             {
                 MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
                 mainWindow.Flyout_Animation.IsOpen = false;
                 mainWindow.Flyout_Video.Content = new VideoPlayerUserControl(animationVodObject);
                 mainWindow.Flyout_Video.IsOpen = true;
-            }));
+            });
             // 儲存近期播放
             Task.Run(() =>
             {

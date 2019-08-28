@@ -12,7 +12,7 @@ using System.Windows.Controls;
 /// 此文件主要為設定播放器的事件
 /// 規則: 
 /// (1) 若要設定或取得播放器相關的東西, 必須使用"ThreadPool.QueueUserWorkItem", 避免Freeze的問題
-/// (2) 若要設定或取得UI相關的東西, 必須使用"Dispatcher.BeginInvoke", 因為此事件為Player的執行序, 無法直接控制UI執行序
+/// (2) 若要設定或取得UI相關的東西, 必須使用"Dispatcher.InvokeAsync", 因為此事件為Player的執行序, 無法直接控制UI執行序
 /// (3) 若要設定或取得"UI Model"的東西, 直接使用即可
 /// </summary>
 

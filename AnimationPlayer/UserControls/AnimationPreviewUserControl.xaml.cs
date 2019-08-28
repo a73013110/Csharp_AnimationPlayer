@@ -67,13 +67,13 @@ namespace AnimationPlayer.UserControls
         /// <param name="e"></param>
         private void Btn_Watch_Click(object sender, RoutedEventArgs e)
         {
-            this.Dispatcher.BeginInvoke(new Action(() =>
+            this.Dispatcher.InvokeAsync(() =>
             {
                 MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
                 AnimationObject animationObject = ((Button)sender).DataContext as AnimationObject;
                 mainWindow.Flyout_Animation.Content = new AnimationViewUserControl(animationObject);
                 mainWindow.Flyout_Animation.IsOpen = true;
-            }));            
+            });            
         }
     }
 }
