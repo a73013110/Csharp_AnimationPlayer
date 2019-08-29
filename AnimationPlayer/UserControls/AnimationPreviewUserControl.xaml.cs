@@ -55,14 +55,10 @@ namespace AnimationPlayer.UserControls
         /// <param name="e"></param>
         private void Btn_Favorite_Click(object sender, RoutedEventArgs e)
         {
-            if (((ToggleButton)sender).IsChecked.Value) // 加到最愛
-            {
-                SetAnimationObjectToJson((AnimationObject)(((ToggleButton)sender).DataContext), Mode.Faverite);
-            }
-            else    // 取消最愛
-            {
-                RemoveAnimationObjectFromJson((AnimationObject)(((ToggleButton)sender).DataContext), Mode.Faverite);
-            }
+            // 加到最愛
+            if (((ToggleButton)sender).IsChecked.Value) SetAnimationObjectToJson((AnimationObject)(((ToggleButton)sender).DataContext), Mode.Faverite);
+            // 取消最愛
+            else RemoveAnimationObjectFromJson((AnimationObject)(((ToggleButton)sender).DataContext), Mode.Faverite);
         }
 
         /// <summary>

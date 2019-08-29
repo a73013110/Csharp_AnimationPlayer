@@ -53,7 +53,7 @@
                         HorizontalAlignment="Right" VerticalAlignment="Top" Background="#19FFFFFF">
                     <materialDesign:PackIcon Kind="TrashCan" Width="30" Height="30" />
                 </Button>
-                <ToggleButton x:Name="Btn_Favorite" Width="50" Height="50" 
+                <ToggleButton x:Name="Btn_Favorite" Width="50" Height="50" IsChecked="{Binding IsFavaorite}"
                               Style="{StaticResource MaterialDesignActionToggleButton}"
                               HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" Click="Btn_Favorite_Click">
                     <ToggleButton.Content>

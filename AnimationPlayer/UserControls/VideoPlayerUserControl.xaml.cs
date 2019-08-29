@@ -107,7 +107,7 @@ namespace AnimationPlayer.UserControls
                 /// 導致關閉此Flyout後還照常播放影片的問題
                 this.SettingMediaPlayerWithUIValue(() =>
                 {
-                    if (((Flyout)this.Parent).IsOpen) this.StartStreamLink();
+                    if (this.Parent != null && ((Flyout)this.Parent).IsOpen) this.StartStreamLink();
                 });
             });
             //this.Vlc_VideoPlayer.SourceProvider.MediaPlayer.Play(this.VideoPlayerModel.AnimationVod.Link);
