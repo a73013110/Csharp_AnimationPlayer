@@ -41,15 +41,16 @@ namespace AnimationPlayer.UserControls
             timer.Start();
         }
 
+        /// <summary>
+        /// 新增AnimationPreviewUserControl
+        /// </summary>
+        /// <param name="animationObject"></param>
         private void AddAnimationPreviewUserControl(AnimationObject animationObject)
         {
             AnimationPreviewUserControl animationUserControl = null;
             // 根據模式顯示對應的AnimationPreviewUserControl
             switch (this.CurrentCrawlerMode)
             {
-                case CrawlerMode.Favorite:  // 我的最愛
-                    animationUserControl = new AnimationPreviewUserControl(animationObject);
-                    break;
                 case CrawlerMode.Recent:    // 近期觀看
                     animationUserControl = new AnimationPreviewUserControl(animationObject, (sender, eventArgs)=>
                     {

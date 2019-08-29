@@ -57,10 +57,17 @@
                               Style="{StaticResource MaterialDesignActionToggleButton}"
                               HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" Click="Btn_Favorite_Click">
                     <ToggleButton.Content>
-                        <materialDesign:PackIcon Kind="StarOutline" Width="30" Height="30" Foreground="{DynamicResource AccentColorBrush2}" />
+                        <materialDesign:PackIcon Kind="StarOutline" Width="30" Height="30" Foreground="{DynamicResource AccentColorBrush2}" materialDesign:ShadowAssist.ShadowDepth="Depth5" />
                     </ToggleButton.Content>
                     <materialDesign:ToggleButtonAssist.OnContent>
-                        <materialDesign:PackIcon Kind="Star" Width="30" Height="30" Foreground="#B2FFFF00" />
+                        <materialDesign:PackIcon Kind="Star" Width="30" Height="30" materialDesign:ShadowAssist.ShadowDepth="Depth5" >
+                            <materialDesign:PackIcon.Foreground>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="Yellow" Offset="0"/>
+                                    <GradientStop Color="#FFFFAE00" Offset="1"/>
+                                </RadialGradientBrush>
+                            </materialDesign:PackIcon.Foreground>
+                        </materialDesign:PackIcon>
                     </materialDesign:ToggleButtonAssist.OnContent>
                 </ToggleButton>
             </Grid>

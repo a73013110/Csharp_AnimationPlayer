@@ -152,14 +152,13 @@ namespace AnimationPlayer.Models
             mainWindow.PB_Progress.Visibility = Visibility.Visible;
             this.Animations.Clear();    // 重置Animation
             mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得最愛的動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            HashSet<AnimationObject> recentWatch = GetAnimationObjectHashSetFromJson();
-            if (recentWatch.Count > 0)
+            HashSet<AnimationObject> animations = GetAnimationObjectHashSetFromJson();
+            if (animations.Count > 0)
             {
-                foreach (AnimationObject animation in recentWatch)
+                foreach (AnimationObject animation in animations)
                 {
-                    if (animation.IsFavaorite) Animations.Add(animation);   // 只取得最近觀看過的
+                    if (animation.IsFavaorite) Animations.Add(animation);   // 只取得最愛的動畫
                 }
-                mainWindow.SB_Hint.MessageQueue.Enqueue("最愛的動畫取得完畢, 等待介面顯示...", "確認", () => mainWindow.SB_Hint.IsActive = false);
             }
 
             if (Animations.Count == 0)
@@ -180,14 +179,13 @@ namespace AnimationPlayer.Models
             mainWindow.PB_Progress.Visibility = Visibility.Visible;
             this.Animations.Clear();    // 重置Animation
             mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得最近觀看動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            HashSet<AnimationObject> recentWatch = GetAnimationObjectHashSetFromJson();
-            if (recentWatch.Count > 0)
+            HashSet<AnimationObject> animations = GetAnimationObjectHashSetFromJson();
+            if (animations.Count > 0)
             {
-                foreach (AnimationObject animation in recentWatch)
+                foreach (AnimationObject animation in animations)
                 {
-                    if (animation.Recent_Watch_Index >= 0) Animations.Add(animation);   // 只取得最近觀看過的
+                    if (animation.Recent_Watch_Index >= 0) Animations.Add(animation);   // 只取得最近觀看過的動畫
                 }
-                mainWindow.SB_Hint.MessageQueue.Enqueue("最近觀看動畫取得完畢, 等待介面顯示...", "確認", () => mainWindow.SB_Hint.IsActive = false);
             }
 
             if (Animations.Count == 0)
