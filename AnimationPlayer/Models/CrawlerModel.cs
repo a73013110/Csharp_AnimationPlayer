@@ -163,7 +163,7 @@ namespace AnimationPlayer.Models
 
             if (Animations.Count == 0)
             {
-                ((MessageDialogUserControl)mainWindow.DH_Dialog.DialogContent).MessageDialogModel.Message = "近期無觀看動畫";
+                ((MessageDialogUserControl)mainWindow.DH_Dialog.DialogContent).MessageDialogModel.Message = "沒有最愛的動畫";
                 mainWindow.DH_Dialog.IsOpen = true;
             }
             mainWindow.PB_Progress.Visibility = Visibility.Collapsed;
