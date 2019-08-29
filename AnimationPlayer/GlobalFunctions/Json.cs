@@ -23,6 +23,7 @@ namespace AnimationPlayer.GlobalFunctions
             if (!File.Exists(path))
             {
                 FileStream file = File.Create(path);
+                file.Close();
                 return default(T);
             }
             return JsonConvert.DeserializeObject<T>(File.ReadAllText(path));

@@ -24,8 +24,8 @@ namespace AnimationPlayer.GlobalFunctions
         /// </summary>
         public static Dictionary<Mode, string> FilePath = new Dictionary<Mode, string>
         {
-            { Mode.RecentWatch, @"./Recent_Watch.json" },
-            { Mode.Faverite, @"./Faverite.json" },
+            { Mode.RecentWatch, @"./RecentWatchAnimation.json" },
+            { Mode.Faverite, @"./FavoriteAnimation.json" },
         };
 
         /// <summary>

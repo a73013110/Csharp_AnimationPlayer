@@ -57,11 +57,11 @@ namespace AnimationPlayer.UserControls
         {
             if (((ToggleButton)sender).IsChecked.Value) // 加到最愛
             {
-
+                SetAnimationObjectToJson((AnimationObject)(((ToggleButton)sender).DataContext), Mode.Faverite);
             }
             else    // 取消最愛
             {
-
+                RemoveAnimationObjectFromJson((AnimationObject)(((ToggleButton)sender).DataContext), Mode.Faverite);
             }
         }
 
