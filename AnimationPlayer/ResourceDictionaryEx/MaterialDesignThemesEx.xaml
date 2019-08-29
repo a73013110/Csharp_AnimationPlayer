@@ -131,6 +131,49 @@
     </Style>
     <!-- #endregion -->
 
+    <!-- #region 基於MaterialDesignFlatButton的資源,  當"IsMouseOver"時, 背景為透明 -->
+    <Style x:Key="MaterialDesignFlatButton_HoverTransparent" BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}" x:Name="border"
+                                CornerRadius="{Binding Path=(wpf:ButtonAssist.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <wpf:Ripple Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Focusable="False"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Padding="{TemplateBinding Padding}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <wpf:Ripple.Clip>
+                                    <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                                        <Binding ElementName="border" Path="ActualWidth" />
+                                        <Binding ElementName="border" Path="ActualHeight" />
+                                        <Binding ElementName="border" Path="CornerRadius" />
+                                        <Binding ElementName="border" Path="BorderThickness" />
+                                    </MultiBinding>
+                                </wpf:Ripple.Clip>
+                            </wpf:Ripple>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Button.IsDefaulted" Value="true">
+                            <!--Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/-->
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="Transparent" />
+                            <Setter Property="Background" TargetName="border" Value="Transparent" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.23"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- #endregion -->
+
     <!-- #region 基於MaterialDesignSlider的資源, 為Focusable但不會有選擇該元件的提示框, 設置進度條顏色、控制進度按鈕的顏色, 皆為紅色 -->
     <Style x:Key="MaterialDesignSlider_Color" BasedOn="{StaticResource MaterialDesignSlider}" TargetType="{x:Type Slider}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />

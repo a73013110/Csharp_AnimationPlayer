@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using AnimationPlayer.Objects;
 using MahApps.Metro.Controls;
 using AnimationPlayer.Reflections;
+using System.Windows.Controls.Primitives;
+using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 
 namespace AnimationPlayer.UserControls
 {
@@ -44,6 +46,23 @@ namespace AnimationPlayer.UserControls
             InitializeComponent();
             this.Btn_Remove.Click += Btn_Remove_RoutedEventHandler;
             this.Btn_Remove.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// 我的最愛按鈕點擊事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Btn_Favorite_Click(object sender, RoutedEventArgs e)
+        {
+            if (((ToggleButton)sender).IsChecked.Value) // 加到最愛
+            {
+
+            }
+            else    // 取消最愛
+            {
+
+            }
         }
 
         /// <summary>

@@ -53,7 +53,7 @@ namespace AnimationPlayer.UserControls
                 case CrawlerMode.Recent:    // 近期觀看
                     animationUserControl = new AnimationPreviewUserControl(animationObject, (sender, eventArgs)=>
                     {
-                        RemoveAnimationObjectFromJson((AnimationObject)(((Button)sender).DataContext), FilePath[Mode.RecentWatch]); // 從檔案刪除該動畫
+                        RemoveAnimationObjectFromJson((AnimationObject)(((Button)sender).DataContext), Mode.RecentWatch); // 從檔案刪除該動畫
                         this.SP_AnimationPanel.Children.Remove(animationUserControl);   // 刪除UI
                     });
                     break;
