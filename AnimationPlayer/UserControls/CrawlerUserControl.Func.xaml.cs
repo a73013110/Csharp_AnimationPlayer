@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 
 namespace AnimationPlayer.UserControls
 {
@@ -42,7 +43,7 @@ namespace AnimationPlayer.UserControls
 
         private void AddAnimationPreviewUserControl(AnimationObject animationObject)
         {
-            AnimationPreviewUserControl animationUserControl;
+            AnimationPreviewUserControl animationUserControl = null;
             // 根據模式顯示對應的AnimationPreviewUserControl
             switch (this.CurrentCrawlerMode)
             {
@@ -50,9 +51,10 @@ namespace AnimationPlayer.UserControls
                     animationUserControl = new AnimationPreviewUserControl(animationObject);
                     break;
                 case CrawlerMode.Recent:    // 近期觀看
-                    animationUserControl = new AnimationPreviewUserControl(animationObject, (s, e)=>
+                    animationUserControl = new AnimationPreviewUserControl(animationObject, (sender, eventArgs)=>
                     {
-                        Console.WriteLine("測試");
+                        RemoveAnimationObjectFromJson((AnimationObject)(((Button)sender).DataContext), FilePath[Mode.RecentWatch]); // 從檔案刪除該動畫
+                        this.SP_AnimationPanel.Children.Remove(animationUserControl);   // 刪除UI
                     });
                     break;
                 default:    // 其餘的模式

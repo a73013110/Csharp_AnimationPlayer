@@ -47,7 +47,7 @@ namespace AnimationPlayer.GlobalFunctions
         }
 
         /// <summary>
-        /// 檢查並取得該動畫
+        /// 透過網址檢查並取得該動畫
         /// </summary>
         /// <param name="href">動畫網址</param>
         /// <param name="path">檔案路徑</param>
@@ -79,14 +79,20 @@ namespace AnimationPlayer.GlobalFunctions
         /// <summary>
         /// 刪除指定動畫
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="animationObject"></param>
-        /// <returns></returns>
-        public static void RemoveAnimationObjectFromJson(string path, AnimationObject animationObject)
+        /// <param name="animationObject">欲刪除的動畫</param>
+        /// <param name="path">檔案路徑</param>
+        public static void RemoveAnimationObjectFromJson(AnimationObject animationObject, string path)
         {
             HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(path);  // 讀取
-            if (animationList != null && animationList.Contains(animationObject)) animationList.Remove(animationObject);    // 刪除
-            WriteToFile(animationList, path);  // 儲存
+            if (animationList != null)
+            {
+                animationList = animationList.ToHashSet(new AnimationObjectComparer()); // 設置Comparer
+                if (animationList.Contains(animationObject))    // 若存在該動畫
+                {
+                    animationList.Remove(animationObject);    // 刪除
+                    WriteToFile(animationList, path);  // 儲存
+                }
+            }                
         }
     }
 
