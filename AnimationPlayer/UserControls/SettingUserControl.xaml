@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="AnimationPlayer.UserControls.SettingUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnimationPlayer.UserControls"
+             xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:properties="clr-namespace:AnimationPlayer.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="400">
+
+    <Grid Background="#F2292929">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition />
+            <RowDefinition Height="55" />
+        </Grid.RowDefinitions>
+
+        <materialDesign:Card VerticalAlignment="Stretch" Background="#FF1D1D1D" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+            <TextBlock Text="設定" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="{DynamicResource AccentColorBrush4}" />
+        </materialDesign:Card>
+
+        <Grid Grid.Row="1" Margin="20">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Foreground="{DynamicResource AccentColorBrush4}">
+                <ScrollViewer.Resources>
+                    <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal_Obvious_Vertical}" />
+                </ScrollViewer.Resources>
+                <StackPanel>
+                    <TextBlock Text="播放器" Margin="10" FontSize="16" />
+                    <Grid Margin="10, 5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="執行序數量" ToolTip="數量越多影片緩衝發生機率越低" FontSize="14" VerticalAlignment="Center" />
+                        <metro:NumericUpDown x:Name="NUD_Thread" Grid.Column="1" Minimum="1" Maximum="10" Interval="1" InterceptManualEnter="False"
+                                             Value="{Binding StreamLink_hls_segment_threads, Source={x:Static properties:Settings.Default}}" FontSize="14" HorizontalContentAlignment="Center" Focusable="False" NumericInputMode="Numbers" />
+                    </Grid>
+                    <Grid Margin="10, 5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="影片畫質" ToolTip="Best: 最高畫質; Worst: 最低畫質" FontSize="14" VerticalAlignment="Center" />
+                        <ComboBox x:Name="CB_Quality" Grid.Column="1" Style="{StaticResource MetroComboBox}" FontSize="14" HorizontalContentAlignment="Center">
+                            <ComboBoxItem Content="worst" />
+                            <ComboBoxItem Content="best" IsSelected="True" />
+                        </ComboBox>
+                    </Grid>
+                    <!--<Separator Style="{StaticResource MaterialDesignLightSeparator}" />-->
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Btn_Save" Grid.Column="1" Style="{StaticResource MaterialDesignFlatButton}" Foreground="#CC00FF00" Background="#FF1D1D1D">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Check" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="儲存   " FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="Btn_Cancel" Grid.Column="3" Style="{StaticResource MaterialDesignFlatButton}" Foreground="#CCFF0000" Background="#FF1D1D1D">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Multiply" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="取消   " FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

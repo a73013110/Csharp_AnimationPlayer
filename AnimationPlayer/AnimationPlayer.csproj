@@ -154,6 +154,9 @@
     <Compile Include="UserControls\MessageDialogUserControl.xaml.cs">
       <DependentUpon>MessageDialogUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\SettingUserControl.xaml.cs">
+      <DependentUpon>SettingUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\VideoPlayerUserControl.PlayerEvent.xaml.cs" />
     <Compile Include="UserControls\VideoPlayerUserControl.Func.xaml.cs" />
     <Compile Include="UserControls\VideoPlayerUserControl.StreamLink.xaml.cs" />
@@ -208,6 +211,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserControls\MessageDialogUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SettingUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
