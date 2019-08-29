@@ -116,7 +116,7 @@ namespace AnimationPlayer.UserControls
         public void Btn_FavoriteAnimation_Click(object sender, RoutedEventArgs e)
         {
             this.CurrentCrawlerMode = CrawlerMode.Favorite;
-
+            this.CrawlerModel.GetFavoriteAnimations();
         }
 
         /// <summary>

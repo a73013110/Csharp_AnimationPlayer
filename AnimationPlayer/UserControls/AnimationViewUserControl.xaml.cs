@@ -90,7 +90,7 @@ namespace AnimationPlayer.UserControls
                     this.AnimationViewModel.VodList[this.AnimationViewModel.Animation.Recent_Watch_Index].Recent_Watch = Visibility.Collapsed;
                 animationVodObject.Recent_Watch = Visibility.Visible;
                 this.AnimationViewModel.Animation.Recent_Watch_Index = this.AnimationViewModel.VodList.IndexOf(animationVodObject);
-                SetAnimationObjectToJson(this.AnimationViewModel.Animation, Mode.RecentWatch);    // 將近期播放更新到檔案
+                SetAnimationObjectToJson(this.AnimationViewModel.Animation);    // 將近期播放更新到檔案
             });            
         }
     }

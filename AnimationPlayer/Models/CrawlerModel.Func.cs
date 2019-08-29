@@ -19,16 +19,16 @@ namespace AnimationPlayer.Models
         private async Task AddAnimation(string href)
         {
             // 先檢查先前是否有儲存
-            AnimationObject animation = GetAnimationObjectFromJson(href, Mode.RecentWatch);
-            if (animation != null) { Animations.Add(animation); return; }
-            animation = GetAnimationObjectFromJson(href, Mode.Faverite);
-            if (animation != null) { Animations.Add(animation); return; }
-            // 若都沒有儲存才至網頁搜尋
-            var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());   // 產生瀏覽網頁的物件
-            var document = await context.OpenAsync(href);    // 異步取得網站內容
-            var meta = document.QuerySelector("*[name='keywords']") as IHtmlMetaElement;    // 從Meta Tag取得動畫名稱
-            var image = document.QuerySelector("div.info_img_box.fl").FirstElementChild as IHtmlImageElement;  // 從網站內取得特定id tag裡面的li
-            Animations.Add(new AnimationObject(meta.Content, image.Source, href));
+            AnimationObject animation = GetAnimationObjectFromJson(href);
+            if (animation != null) Animations.Add(animation);
+            else    // 若都沒有儲存才至網頁搜尋
+            {
+                var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());   // 產生瀏覽網頁的物件
+                var document = await context.OpenAsync(href);    // 異步取得網站內容
+                var meta = document.QuerySelector("*[name='keywords']") as IHtmlMetaElement;    // 從Meta Tag取得動畫名稱
+                var image = document.QuerySelector("div.info_img_box.fl").FirstElementChild as IHtmlImageElement;  // 從網站內取得特定id tag裡面的li
+                Animations.Add(new AnimationObject(meta.Content, image.Source, href));
+            }
         }
     }
 }

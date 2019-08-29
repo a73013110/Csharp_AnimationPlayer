@@ -12,31 +12,16 @@ namespace AnimationPlayer.GlobalFunctions
 {
     public static class AnimationObjectJson
     {
-        /// <summary>
-        ///  動畫路徑的Key
-        /// </summary>
-        public enum Mode
-        {
-            RecentWatch, Faverite
-        }
-        /// <summary>
-        /// 動畫路徑的Dictionary
-        /// </summary>
-        public static Dictionary<Mode, string> FilePath = new Dictionary<Mode, string>
-        {
-            { Mode.RecentWatch, @"./RecentWatchAnimation.json" },
-            { Mode.Faverite, @"./FavoriteAnimation.json" },
-        };
+        private static string path = @"./AnimationObjects.json";
 
         /// <summary>
         /// 新增或更新動畫至Json檔
         /// </summary>
         /// <param name="animationObject">欲更新的動畫</param>
-        /// <param name="mode">操作模式</param>
-        public static void SetAnimationObjectToJson(AnimationObject animationObject, Mode mode)
+        public static void SetAnimationObjectToJson(AnimationObject animationObject)
         {
             // 檢索速度最快, 使用的HashSet必須自定義Comparer
-            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(FilePath[mode]);  // 讀取
+            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(path);  // 讀取
             if (animationList == null) animationList = new HashSet<AnimationObject>(new AnimationObjectComparer()); // 創建新的HashSet
             else
             {
@@ -44,18 +29,17 @@ namespace AnimationPlayer.GlobalFunctions
                 if (animationList.Contains(animationObject)) animationList.Remove(animationObject); // 若動畫已存在HashSet, 先刪除
             }
             animationList.Add(animationObject); // 添加資料進去HashSet
-            WriteToFile(animationList, FilePath[mode]);  // 儲存
+            WriteToFile(animationList, path);  // 儲存
         }
 
         /// <summary>
         /// 透過網址檢查並取得該動畫
         /// </summary>
         /// <param name="href">動畫網址</param>
-        /// <param name="mode">操作模式</param>
         /// <returns>If 存在欲取得的動畫: return該動畫; Else: return NULL</returns>
-        public static AnimationObject GetAnimationObjectFromJson(string href, Mode mode)
+        public static AnimationObject GetAnimationObjectFromJson(string href)
         {
-            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(FilePath[mode]);  // 讀取
+            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(path);  // 讀取
             if (animationList != null) 
             {
                 animationList = animationList.ToHashSet(new AnimationObjectComparer()); // 設置Comparer
@@ -68,11 +52,10 @@ namespace AnimationPlayer.GlobalFunctions
         /// <summary>
         /// 取得全部動畫
         /// </summary>
-        /// <param name="mode">操作模式</param>
         /// <returns>所有動畫</returns>
-        public static HashSet<AnimationObject> GetAnimationObjectHashSetFromJson(Mode mode)
+        public static HashSet<AnimationObject> GetAnimationObjectHashSetFromJson()
         {
-            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(FilePath[mode]);  // 讀取
+            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(path);  // 讀取
             if (animationList == null) return new HashSet<AnimationObject>(new AnimationObjectComparer());  // 回傳空的HashSet
             else return animationList.ToHashSet(new AnimationObjectComparer()); // 回傳所有動畫
         }
@@ -81,17 +64,16 @@ namespace AnimationPlayer.GlobalFunctions
         /// 刪除指定動畫
         /// </summary>
         /// <param name="animationObject">欲刪除的動畫</param>
-        /// <param name="mode">操作模式</param>
-        public static void RemoveAnimationObjectFromJson(AnimationObject animationObject, Mode mode)
+        public static void RemoveAnimationObjectFromJson(AnimationObject animationObject)
         {
-            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(FilePath[mode]);  // 讀取
+            HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(path);  // 讀取
             if (animationList != null)
             {
                 animationList = animationList.ToHashSet(new AnimationObjectComparer()); // 設置Comparer
                 if (animationList.Contains(animationObject))    // 若存在該動畫
                 {
                     animationList.Remove(animationObject);    // 刪除
-                    WriteToFile(animationList, FilePath[mode]);  // 儲存
+                    WriteToFile(animationList, path);  // 儲存
                 }
             }                
         }
