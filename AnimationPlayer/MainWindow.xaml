@@ -70,11 +70,11 @@
     <metro:MetroWindow.Flyouts>
         <metro:FlyoutsControl>
             
-            <metro:Flyout x:Name="Flyout_Animation" Position="Left"
+            <metro:Flyout x:Name="Flyout_Animation" Position="Left" IsPinned="False"
                           CloseButtonVisibility="Collapsed" TitleVisibility="Collapsed"
                           Background="#FF1D1D1D" IsOpen="False"
                           Width="400"
-                          Height="{Binding ActualHeight, ElementName=metroWindow, Mode=OneWay}">
+                          Height="{Binding ActualHeight, ElementName=metroWindow}">
                 <!--<UserControls:AnimationViewUserControl />-->
             </metro:Flyout>
 
