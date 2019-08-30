@@ -86,8 +86,8 @@
             <!--設定-->
             <metro:Flyout x:Name="Flyout_Setting" Position="Top" AnimateOpacity="True"
                           CloseButtonVisibility="Collapsed" TitleVisibility="Collapsed" 
-                          Background="{x:Null}" IsOpen="True" Margin="0 40 0 0"
-                          Width="400" Height="500">
+                          Background="{x:Null}" IsOpen="True" Margin="0 30 0 60"
+                          Height="{cal:Binding (ActualHeight-30), ElementName=metroWindow}">
                 <UserControls:SettingUserControl />
             </metro:Flyout>
         </metro:FlyoutsControl>
