@@ -13,8 +13,6 @@ using MaterialDesignThemes.Wpf;
 using MahApps.Metro.Controls;
 using AnimationPlayer.UserControls;
 using AngleSharp.Html.Parser;
-using CefSharp;
-using CefSharp.OffScreen;
 using System.Threading;
 using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 using System.Collections.Generic;
@@ -36,32 +34,45 @@ namespace AnimationPlayer.Models
         /// 取得搜尋動畫
         /// </summary>
         /// <returns></returns>
-        private readonly CefBrowser Cef = new CefBrowser();
+        private readonly Chrome chrome = new Chrome();
         public async Task GetSearchAnimations(string search)
         {
-            #region 使用CefBrowser搜尋動畫(意外突破該網站15秒內不得重複搜尋的限制)
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.PB_Progress.Visibility = Visibility.Visible;
             mainWindow.SB_Hint.MessageQueue.Enqueue("清空動畫列表", "確認", () => mainWindow.SB_Hint.IsActive = false);
             this.Animations.Clear();    // 重置Animation
             mainWindow.SB_Hint.MessageQueue.Enqueue("初始化搜尋", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            bool loadEnd = false;   // 標記CefBrowser是否已經載入完畢
-            void FrameLoadEndEvent(object s, FrameLoadEndEventArgs e) => loadEnd = true;    // CefBrowser載入完畢事件
-            Cef.Browser.FrameLoadEnd += FrameLoadEndEvent;  // 註冊CefBrowser載入完畢事件
-            Cef.Browser.Load("https://myself-bbs.com/search.php?mod=forum");    // 載入動畫搜尋網站
-            await Task.Run(() => SpinWait.SpinUntil(() => loadEnd, 3000));  // 等待CefBrowser載入完畢
-            loadEnd = false;    // 重設標記
+            await this.chrome.Initial();
+            await this.chrome.Load("https://myself-bbs.com/search.php?mod=forum");
             mainWindow.SB_Hint.MessageQueue.Enqueue("正在搜尋動畫...", "確認", () => mainWindow.SB_Hint.IsActive = false);
             string script = $"document.querySelector('#scform_srchtxt').value = '{search}';document.querySelector('#scform_submit').click();";
-            Cef.Browser.GetMainFrame().ExecuteJavaScriptAsync(script);  // 透過JavaScript執行搜尋
-            await Task.Run(() => SpinWait.SpinUntil(() => loadEnd, 3000));  // 等待CefBrowser載入完畢
-            Cef.Browser.FrameLoadEnd -= FrameLoadEndEvent;  // 註銷CefBrowser載入完畢事件
-            #endregion
-            
+            await this.chrome.ExecuteScript(script);
+            string source = chrome.GetSource();
+
+
+            #region [已棄用]舊版(透過CefSharp)搜尋動畫方法(意外突破該網站15秒內不得重複搜尋的限制)
+            //MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            //mainWindow.PB_Progress.Visibility = Visibility.Visible;
+            //mainWindow.SB_Hint.MessageQueue.Enqueue("清空動畫列表", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            //this.Animations.Clear();    // 重置Animation
+            //mainWindow.SB_Hint.MessageQueue.Enqueue("初始化搜尋", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            //bool loadEnd = false;   // 標記CefBrowser是否已經載入完畢
+            //void FrameLoadEndEvent(object s, FrameLoadEndEventArgs e) => loadEnd = true;    // CefBrowser載入完畢事件
+            //Cef.Browser.FrameLoadEnd += FrameLoadEndEvent;  // 註冊CefBrowser載入完畢事件
+            //Cef.Browser.Load("https://myself-bbs.com/search.php?mod=forum");    // 載入動畫搜尋網站
+            //await Task.Run(() => SpinWait.SpinUntil(() => loadEnd, 3000));  // 等待CefBrowser載入完畢
+            //loadEnd = false;    // 重設標記
+            //mainWindow.SB_Hint.MessageQueue.Enqueue("正在搜尋動畫...", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            //string script = $"document.querySelector('#scform_srchtxt').value = '{search}';document.querySelector('#scform_submit').click();";
+            //Cef.Browser.GetMainFrame().ExecuteJavaScriptAsync(script);  // 透過JavaScript執行搜尋
+            //await Task.Run(() => SpinWait.SpinUntil(() => loadEnd, 3000));  // 等待CefBrowser載入完畢
+            //Cef.Browser.FrameLoadEnd -= FrameLoadEndEvent;  // 註銷CefBrowser載入完畢事件
+            //string source = await Cef.Browser.GetSourceAsync();
+            #endregion 
+
             #region 取得動畫搜尋網站結果並Parser Html
-            string source = await Cef.Browser.GetSourceAsync();
             var Parser = new HtmlParser();
-            var document = Parser.ParseDocument(source);  
+            var document = Parser.ParseDocument(source);
             #endregion
 
             #region [已棄用]舊版(透過HTTP傳輸資料)搜尋動畫方法

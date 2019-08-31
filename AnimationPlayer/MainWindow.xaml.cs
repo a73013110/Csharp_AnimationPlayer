@@ -1,5 +1,4 @@
 ﻿using AnimationPlayer.UserControls;
-using CefSharp;
 using MahApps.Metro.Controls;
 using System;
 using System.Windows;
@@ -39,7 +38,6 @@ namespace AnimationPlayer
         {
             try
             {
-                Cef.Shutdown();
                 VideoPlayerUserControl videoPlayerUserControl = (VideoPlayerUserControl)this.Flyout_Video.Content;
                 if (videoPlayerUserControl != null) videoPlayerUserControl.KillStreamLink();
                 Environment.Exit(0);    // 關閉所有執行序
