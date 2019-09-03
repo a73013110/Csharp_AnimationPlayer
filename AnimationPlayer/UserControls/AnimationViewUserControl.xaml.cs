@@ -76,19 +76,14 @@ namespace AnimationPlayer.UserControls
         private Chrome Player = null;
         private async void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;
-            // 開啟影片視窗並播放
-            //if (this.Player != null) this.Player.Quit();
-            this.Player = new Chrome(true, new Point(Application.Current.MainWindow.Left + Application.Current.MainWindow.Width / 2, Application.Current.MainWindow.Top + Application.Current.MainWindow.Height / 2));
-            await this.Player.Initial();    // 確認chrome是否已經初始化
-            await this.Player.Load($"chrome-extension://{Settings.Default.M3u8Player_ID}/html/Player.html#{animationVodObject.Href}");  // 載入動畫搜尋網站
-            //this.Dispatcher.InvokeAsync(() =>
-            //{
-            //    MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            //    mainWindow.Flyout_Animation.IsOpen = false;
-            //    mainWindow.Flyout_Video.Content = new VideoPlayerUserControl(animationVodObject);
-            //    mainWindow.Flyout_Video.IsOpen = true;
-            //});
+            AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;            
+            _ = this.Dispatcher.InvokeAsync(async () =>
+            {
+                // 開啟影片視窗並播放
+                this.Player = new Chrome(true, new Point(Application.Current.MainWindow.Left + Application.Current.MainWindow.Width / 2, Application.Current.MainWindow.Top + Application.Current.MainWindow.Height / 2));
+                await this.Player.Initial();    // 確認chrome是否已經初始化
+                await this.Player.Load($"chrome-extension://{Settings.Default.M3u8Player_ID}/html/Player.html#{animationVodObject.Href}");  // 載入動畫搜尋網站
+            });
             // 儲存近期播放
             await Task.Run(() =>
             {
