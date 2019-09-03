@@ -20,5 +20,14 @@
     <Setting Name="Animated_Character_Enter_Source" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://4.bp.blogspot.com/-yLL899xkV-A/Wwufve6-2WI/AAAAAAAJlig/QYUS0iS1R98IJjYZ1ISEpOgy1r7OCMo1gCLcBGAs/s1600/AW1121058_05.gif</Value>
     </Setting>
+    <Setting Name="Chrome_Player_Width" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1300</Value>
+    </Setting>
+    <Setting Name="Chrome_Player_Height" Type="System.String" Scope="User">
+      <Value Profile="(Default)">810</Value>
+    </Setting>
+    <Setting Name="M3u8Player_ID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">emgegpdfcimcmfdplkpbiakpnjhoingk</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

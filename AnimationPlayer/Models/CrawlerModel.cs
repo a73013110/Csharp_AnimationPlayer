@@ -34,21 +34,23 @@ namespace AnimationPlayer.Models
         /// 取得搜尋動畫
         /// </summary>
         /// <returns></returns>
-        private readonly Chrome chrome = new Chrome();
+        private Chrome chrome = null;
         public async Task GetSearchAnimations(string search)
         {
+            this.chrome = new Chrome();
+            #region 搜尋動畫方法(意外突破該網站15秒內不得重複搜尋的限制)
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.PB_Progress.Visibility = Visibility.Visible;
             mainWindow.SB_Hint.MessageQueue.Enqueue("清空動畫列表", "確認", () => mainWindow.SB_Hint.IsActive = false);
             this.Animations.Clear();    // 重置Animation
             mainWindow.SB_Hint.MessageQueue.Enqueue("初始化搜尋", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            await this.chrome.Initial();
-            await this.chrome.Load("https://myself-bbs.com/search.php?mod=forum");
+            await this.chrome.Initial();    // 確認chrome是否已經初始化
+            await this.chrome.Load("https://myself-bbs.com/search.php?mod=forum");  // 載入動畫搜尋網站
             mainWindow.SB_Hint.MessageQueue.Enqueue("正在搜尋動畫...", "確認", () => mainWindow.SB_Hint.IsActive = false);
             string script = $"document.querySelector('#scform_srchtxt').value = '{search}';document.querySelector('#scform_submit').click();";
-            await this.chrome.ExecuteScript(script);
+            await this.chrome.ExecuteScript(script);    // 透過JavaScript執行搜尋
             string source = chrome.GetSource();
-
+            #endregion
 
             #region [已棄用]舊版(透過CefSharp)搜尋動畫方法(意外突破該網站15秒內不得重複搜尋的限制)
             //MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
@@ -68,7 +70,7 @@ namespace AnimationPlayer.Models
             //await Task.Run(() => SpinWait.SpinUntil(() => loadEnd, 3000));  // 等待CefBrowser載入完畢
             //Cef.Browser.FrameLoadEnd -= FrameLoadEndEvent;  // 註銷CefBrowser載入完畢事件
             //string source = await Cef.Browser.GetSourceAsync();
-            #endregion 
+            #endregion
 
             #region 取得動畫搜尋網站結果並Parser Html
             var Parser = new HtmlParser();
@@ -127,6 +129,8 @@ namespace AnimationPlayer.Models
             }
             else mainWindow.SB_Hint.MessageQueue.Enqueue("搜尋動畫取得完畢, 等待介面顯示...", "確認", () => mainWindow.SB_Hint.IsActive = false);
             mainWindow.PB_Progress.Visibility = Visibility.Collapsed;
+
+            this.chrome.Quit();
         }
 
         /// <summary>

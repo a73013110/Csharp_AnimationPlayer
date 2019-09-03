@@ -95,5 +95,41 @@ namespace AnimationPlayer.Properties {
                 this["Animated_Character_Enter_Source"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1300")]
+        public string Chrome_Player_Width {
+            get {
+                return ((string)(this["Chrome_Player_Width"]));
+            }
+            set {
+                this["Chrome_Player_Width"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("810")]
+        public string Chrome_Player_Height {
+            get {
+                return ((string)(this["Chrome_Player_Height"]));
+            }
+            set {
+                this["Chrome_Player_Height"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("emgegpdfcimcmfdplkpbiakpnjhoingk")]
+        public string M3u8Player_ID {
+            get {
+                return ((string)(this["M3u8Player_ID"]));
+            }
+            set {
+                this["M3u8Player_ID"] = value;
+            }
+        }
     }
 }

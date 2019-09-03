@@ -1,6 +1,7 @@
 ﻿using AnimationPlayer.UserControls;
 using MahApps.Metro.Controls;
 using System;
+using System.Diagnostics;
 using System.Windows;
 
 namespace AnimationPlayer
@@ -38,6 +39,7 @@ namespace AnimationPlayer
         {
             try
             {
+                foreach (var process in Process.GetProcessesByName("chromedriver")) process.Kill(); // 關閉chromedriver
                 VideoPlayerUserControl videoPlayerUserControl = (VideoPlayerUserControl)this.Flyout_Video.Content;
                 if (videoPlayerUserControl != null) videoPlayerUserControl.KillStreamLink();
                 Environment.Exit(0);    // 關閉所有執行序
