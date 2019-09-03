@@ -1,7 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using AnimationPlayer.Properties;
+﻿using AnimationPlayer.Properties;
 using MahApps.Metro.Controls;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace AnimationPlayer.UserControls
 {

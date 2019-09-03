@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AnimationPlayer.Objects;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using AnimationPlayer.Objects;
-using MahApps.Metro.Controls;
-using AnimationPlayer.Reflections;
-using System.Windows.Controls.Primitives;
 using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 
 namespace AnimationPlayer.UserControls
@@ -97,7 +86,7 @@ namespace AnimationPlayer.UserControls
                 AnimationObject animationObject = ((Button)sender).DataContext as AnimationObject;
                 mainWindow.Flyout_Animation.Content = new AnimationViewUserControl(animationObject);
                 mainWindow.Flyout_Animation.IsOpen = true;
-            });            
+            });
         }
     }
 }

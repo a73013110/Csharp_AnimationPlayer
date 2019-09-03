@@ -1,9 +1,8 @@
 ﻿using AngleSharp;
 using AngleSharp.Html.Dom;
-using System.Threading.Tasks;
 using AnimationPlayer.Objects;
+using System.Threading.Tasks;
 using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
-using System;
 
 namespace AnimationPlayer.Models
 {

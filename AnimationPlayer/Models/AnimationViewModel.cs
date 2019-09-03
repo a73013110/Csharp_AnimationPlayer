@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AngleSharp;
 using AnimationPlayer.Objects;
-using AngleSharp;
-using AngleSharp.Html.Dom;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AnimationPlayer.Models
 {
@@ -14,7 +11,7 @@ namespace AnimationPlayer.Models
         public AnimationViewModel(AnimationObject animation)
         {
             this.Animation = animation;
-            _ = GetAnimationInfoAndVodList();            
+            _ = GetAnimationInfoAndVodList();
         }
 
         public AnimationObject Animation { get; set; }  // 這個UserControl所顯示的動畫
@@ -31,7 +28,7 @@ namespace AnimationPlayer.Models
         {
             // 取得網站內容
             var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
-            var document = await context.OpenAsync(this.Animation.Href);    
+            var document = await context.OpenAsync(this.Animation.Href);
             // 取得動畫資訊
             var infos = document.QuerySelector("div.info_info").QuerySelectorAll("li");
             foreach (var info in infos)
@@ -52,7 +49,7 @@ namespace AnimationPlayer.Models
                     {
                         string dataHref = href.FirstElementChild.GetAttribute("data-href").Replace("\n", string.Empty);
                         string[] data = dataHref.Split('/');
-                        this.VodList.Add(new AnimationVodObject(vod.FirstElementChild.TextContent, "https://vpx.myself-bbs.com/" + data[data.Length - 2] + "/" +  data[data.Length - 1] + "/720p.m3u8"));
+                        this.VodList.Add(new AnimationVodObject(vod.FirstElementChild.TextContent, "https://vpx.myself-bbs.com/" + data[data.Length - 2] + "/" + data[data.Length - 1] + "/720p.m3u8"));
                         break;
                     }
                 }

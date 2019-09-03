@@ -1,13 +1,8 @@
 ﻿using AnimationPlayer.Objects;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 
@@ -52,7 +47,7 @@ namespace AnimationPlayer.UserControls
             switch (this.CurrentCrawlerMode)
             {
                 case CrawlerMode.Recent:    // 近期觀看
-                    animationUserControl = new AnimationPreviewUserControl(animationObject, (sender, eventArgs)=>
+                    animationUserControl = new AnimationPreviewUserControl(animationObject, (sender, eventArgs) =>
                     {
                         AnimationObject animationObj = ((Button)sender).DataContext as AnimationObject;
                         animationObj.Recent_Watch_Index = -1;   // 重設該動畫的最近觀看index

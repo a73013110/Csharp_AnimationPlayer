@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using AnimationPlayer.Models;
+using AnimationPlayer.Objects;
+using AnimationPlayer.Properties;
+using MahApps.Metro.Controls;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using AnimationPlayer.Objects;
-using AnimationPlayer.Models;
-using Newtonsoft.Json;
-using AnimationPlayer.Properties;
 using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 
 namespace AnimationPlayer.UserControls
@@ -36,7 +26,7 @@ namespace AnimationPlayer.UserControls
         // 實際使用
         public AnimationViewUserControl(AnimationObject animationObject)
         {
-            this.DataContext = AnimationViewModel  = new AnimationViewModel(animationObject);
+            this.DataContext = AnimationViewModel = new AnimationViewModel(animationObject);
             InitializeComponent();
             AnimationViewModel.GetAnimationInfoAndVodListCompleted += GetAnimationInfoAndVodListCompleted;
         }
@@ -76,7 +66,7 @@ namespace AnimationPlayer.UserControls
         private Chrome Player = null;
         private async void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;            
+            AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;
             _ = this.Dispatcher.InvokeAsync(async () =>
             {
                 // 開啟影片視窗並播放
@@ -92,7 +82,7 @@ namespace AnimationPlayer.UserControls
                 animationVodObject.Recent_Watch = Visibility.Visible;
                 this.AnimationViewModel.Animation.Recent_Watch_Index = this.AnimationViewModel.VodList.IndexOf(animationVodObject);
                 SetAnimationObjectToJson(this.AnimationViewModel.Animation);    // 將近期播放更新到檔案
-            });            
+            });
         }
     }
 }

@@ -2,10 +2,8 @@
 using AnimationPlayer.Objects;
 using System;
 using System.Collections.Specialized;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -17,7 +15,7 @@ namespace AnimationPlayer.UserControls
     public partial class CrawlerUserControl : UserControl
     {
         private readonly CrawlerModel CrawlerModel;
-        private enum CrawlerMode {Search, Popular, Favorite, Recent};
+        private enum CrawlerMode { Search, Popular, Favorite, Recent };
         private CrawlerMode CurrentCrawlerMode;
 
         public CrawlerUserControl()

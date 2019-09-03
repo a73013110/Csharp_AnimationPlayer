@@ -1,22 +1,13 @@
 ﻿using AngleSharp;
 using AngleSharp.Html.Dom;
-using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using MahApps.Metro.Controls.Dialogs;
-using System.Windows;
-using AnimationPlayer.Objects;
-using MaterialDesignThemes.Wpf;
-using MahApps.Metro.Controls;
-using AnimationPlayer.UserControls;
 using AngleSharp.Html.Parser;
-using System.Threading;
-using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
+using AnimationPlayer.Objects;
+using AnimationPlayer.UserControls;
 using System.Collections.Generic;
-using System.Windows.Threading;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
+using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 
 namespace AnimationPlayer.Models
 {

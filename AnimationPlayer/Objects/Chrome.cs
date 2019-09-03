@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using AnimationPlayer.Properties;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using AnimationPlayer.Properties;
+using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace AnimationPlayer.Objects
@@ -52,7 +48,7 @@ namespace AnimationPlayer.Objects
                 }
                 catch (InvalidOperationException)   // 瀏覽器出現時馬上關閉, 過一陣子會觸發例外狀況
                 {
-                    foreach(Process chromedriver in Process.GetProcessesByName("chromedriver"))
+                    foreach (Process chromedriver in Process.GetProcessesByName("chromedriver"))
                     {
                         double difference = (chromedriver.StartTime - beforeChromeDriverStartTime).TotalSeconds;
                         if (difference > 0 && difference < 0.1) // chromedriver啟動時間必定晚於beforeChromeDriverStartTime, 因此排除掉difference < 0的狀況
