@@ -1,7 +1,11 @@
-﻿using AnimationPlayer.Objects;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using AnimationPlayer.Objects;
 using static AnimationPlayer.GlobalFunctions.Json;
 
 namespace AnimationPlayer.GlobalFunctions
@@ -36,7 +40,7 @@ namespace AnimationPlayer.GlobalFunctions
         public static AnimationObject GetAnimationObjectFromJson(string href)
         {
             HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(path);  // 讀取
-            if (animationList != null)
+            if (animationList != null) 
             {
                 animationList = animationList.ToHashSet(new AnimationObjectComparer()); // 設置Comparer
                 AnimationObject animationObject = new AnimationObject { Href = href };  // New 一個欲取得的動畫物件
@@ -71,7 +75,7 @@ namespace AnimationPlayer.GlobalFunctions
                     animationList.Remove(animationObject);    // 刪除
                     WriteToFile(animationList, path);  // 儲存
                 }
-            }
+            }                
         }
     }
 

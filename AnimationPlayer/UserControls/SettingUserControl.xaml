@@ -26,17 +26,21 @@
                 <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal_Obvious_Vertical}" />
             </ScrollViewer.Resources>
             <StackPanel>
-                <TextBlock Text="播放器" Margin="10" FontSize="16" />
+                <TextBlock Text="Chrome 瀏覽器" Margin="10" FontSize="16" />
                 <Grid Margin="10, 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="執行序數量" ToolTip="數量越多影片緩衝發生機率越低" FontSize="14" VerticalAlignment="Center" />
-                    <metro:NumericUpDown x:Name="NUD_Thread" Grid.Column="1" Minimum="1" Maximum="10" Interval="1" InterceptManualEnter="False"
-                                            Value="{Binding StreamLink_hls_segment_threads, Source={x:Static properties:Settings.Default}}" FontSize="14" HorizontalContentAlignment="Center" Focusable="False" NumericInputMode="Numbers" />
+                    <TextBlock Grid.Column="0" Text="擴充插件ID" ToolTip="數量越多影片緩衝發生機率越低" FontSize="14" VerticalAlignment="Center" />
+                    <TextBox x:Name="TB_ChromeExtensionID" Grid.Column="1" FontSize="14" HorizontalContentAlignment="Center" Style="{StaticResource MetroTextBox}"
+                             metro:TextBoxHelper.IsWaitingForData="True" metro:TextBoxHelper.UseFloatingWatermark="True"
+                             Text="{Binding M3u8Player_ID, Source={x:Static properties:Settings.Default}}" VerticalContentAlignment="Center" />
                 </Grid>
                 <Grid Margin="10, 5">
+                    <Button Grid.Column="2" x:Name="Btn_TestChromeConnection" Style="{StaticResource MaterialDesignOutlinedButton}" Content="點此測試連結Chrome" BorderBrush="#7FFFFFFF" Click="Btn_TestChromeConnection_Click" />
+                </Grid>
+                <!--<Grid Margin="10, 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -46,8 +50,8 @@
                         <ComboBoxItem Content="best" />
                         <ComboBoxItem Content="worst" />
                     </ComboBox>
-                </Grid>
-                <Grid Margin="10, 5">
+                </Grid>-->
+                <!--<Grid Margin="10, 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -55,8 +59,8 @@
                     <TextBlock Grid.Column="0" Text="影片檔案快取" ToolTip="建議值1000~10000" FontSize="14" VerticalAlignment="Center" />
                     <metro:NumericUpDown x:Name="NUD_FileCache" Grid.Column="1" Minimum="1000" Maximum="10000" Interval="1000" InterceptManualEnter="False"
                                             Value="{Binding Vlc_file_caching, Source={x:Static properties:Settings.Default}}" FontSize="14" HorizontalContentAlignment="Center" Focusable="False" NumericInputMode="Numbers" />
-                </Grid>
-                <Grid Margin="10, 5">
+                </Grid>-->
+                <!--<Grid Margin="10, 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -64,7 +68,7 @@
                     <TextBlock Grid.Column="0" Text="影片串流快取" ToolTip="建議值1000~10000" FontSize="14" VerticalAlignment="Center" />
                     <metro:NumericUpDown x:Name="NUD_NetworkCache" Grid.Column="1" Minimum="1000" Maximum="10000" Interval="1000" InterceptManualEnter="False"
                                             Value="{Binding Vlc_network_caching, Source={x:Static properties:Settings.Default}}" FontSize="14" HorizontalContentAlignment="Center" Focusable="False" NumericInputMode="Numbers" />
-                </Grid>
+                </Grid>-->
                 <!--<Separator Style="{StaticResource MaterialDesignLightSeparator}" />-->
             </StackPanel>
         </ScrollViewer>

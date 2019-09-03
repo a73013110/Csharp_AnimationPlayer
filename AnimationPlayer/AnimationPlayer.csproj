@@ -154,10 +154,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ResourceDictionaryEx\Style.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\AnimationPreviewUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -177,7 +173,6 @@
     <Compile Include="Models\AnimationViewModel.cs" />
     <Compile Include="Objects\AnimationObject.cs" />
     <Compile Include="Objects\AnimationVodObject.cs" />
-    <Compile Include="Reflections\RoutedUICommandEx.cs" />
     <Compile Include="UserControls\AnimationPreviewUserControl.xaml.cs">
       <DependentUpon>AnimationPreviewUserControl.xaml</DependentUpon>
     </Compile>

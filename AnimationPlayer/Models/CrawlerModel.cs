@@ -1,13 +1,22 @@
 ﻿using AngleSharp;
 using AngleSharp.Html.Dom;
-using AngleSharp.Html.Parser;
-using AnimationPlayer.Objects;
-using AnimationPlayer.UserControls;
-using System.Collections.Generic;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
+using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
+using AnimationPlayer.Objects;
+using MaterialDesignThemes.Wpf;
+using MahApps.Metro.Controls;
+using AnimationPlayer.UserControls;
+using AngleSharp.Html.Parser;
+using System.Threading;
 using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
+using System.Collections.Generic;
+using System.Windows.Threading;
 
 namespace AnimationPlayer.Models
 {
@@ -25,42 +34,22 @@ namespace AnimationPlayer.Models
         /// 取得搜尋動畫
         /// </summary>
         /// <returns></returns>
-        private Chrome chrome = null;
         public async Task GetSearchAnimations(string search)
         {
-            this.chrome = new Chrome();
+            Chrome chrome = new Chrome();  // 創建爬蟲工具
             #region 搜尋動畫方法(意外突破該網站15秒內不得重複搜尋的限制)
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.PB_Progress.Visibility = Visibility.Visible;
             mainWindow.SB_Hint.MessageQueue.Enqueue("清空動畫列表", "確認", () => mainWindow.SB_Hint.IsActive = false);
             this.Animations.Clear();    // 重置Animation
             mainWindow.SB_Hint.MessageQueue.Enqueue("初始化搜尋", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            await this.chrome.Initial();    // 確認chrome是否已經初始化
-            await this.chrome.Load("https://myself-bbs.com/search.php?mod=forum");  // 載入動畫搜尋網站
+            await chrome.Initial();    // 確認chrome是否已經初始化
             mainWindow.SB_Hint.MessageQueue.Enqueue("正在搜尋動畫...", "確認", () => mainWindow.SB_Hint.IsActive = false);
+            await chrome.Load("https://myself-bbs.com/search.php?mod=forum");  // 載入動畫搜尋網站
+            mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得搜尋動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
             string script = $"document.querySelector('#scform_srchtxt').value = '{search}';document.querySelector('#scform_submit').click();";
-            await this.chrome.ExecuteScript(script);    // 透過JavaScript執行搜尋
+            await chrome.ExecuteScript(script);    // 透過JavaScript執行搜尋
             string source = chrome.GetSource();
-            #endregion
-
-            #region [已棄用]舊版(透過CefSharp)搜尋動畫方法(意外突破該網站15秒內不得重複搜尋的限制)
-            //MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            //mainWindow.PB_Progress.Visibility = Visibility.Visible;
-            //mainWindow.SB_Hint.MessageQueue.Enqueue("清空動畫列表", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            //this.Animations.Clear();    // 重置Animation
-            //mainWindow.SB_Hint.MessageQueue.Enqueue("初始化搜尋", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            //bool loadEnd = false;   // 標記CefBrowser是否已經載入完畢
-            //void FrameLoadEndEvent(object s, FrameLoadEndEventArgs e) => loadEnd = true;    // CefBrowser載入完畢事件
-            //Cef.Browser.FrameLoadEnd += FrameLoadEndEvent;  // 註冊CefBrowser載入完畢事件
-            //Cef.Browser.Load("https://myself-bbs.com/search.php?mod=forum");    // 載入動畫搜尋網站
-            //await Task.Run(() => SpinWait.SpinUntil(() => loadEnd, 3000));  // 等待CefBrowser載入完畢
-            //loadEnd = false;    // 重設標記
-            //mainWindow.SB_Hint.MessageQueue.Enqueue("正在搜尋動畫...", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            //string script = $"document.querySelector('#scform_srchtxt').value = '{search}';document.querySelector('#scform_submit').click();";
-            //Cef.Browser.GetMainFrame().ExecuteJavaScriptAsync(script);  // 透過JavaScript執行搜尋
-            //await Task.Run(() => SpinWait.SpinUntil(() => loadEnd, 3000));  // 等待CefBrowser載入完畢
-            //Cef.Browser.FrameLoadEnd -= FrameLoadEndEvent;  // 註銷CefBrowser載入完畢事件
-            //string source = await Cef.Browser.GetSourceAsync();
             #endregion
 
             #region 取得動畫搜尋網站結果並Parser Html
@@ -68,34 +57,7 @@ namespace AnimationPlayer.Models
             var document = Parser.ParseDocument(source);
             #endregion
 
-            #region [已棄用]舊版(透過HTTP傳輸資料)搜尋動畫方法
-            //#region 取得搜尋動畫時post所需的資料(formhash和searchsubmit)
-            //string URL = "https://myself-bbs.com/search.php?mod=forum"; // 動畫搜尋網站
-            //var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());   // 產生瀏覽網頁的物件
-            //var document = await context.OpenAsync(URL);    // 取得網站內容
-            //// 取得2個Post要用到的資訊
-            //var formhash = document.QuerySelector("input[name='formhash']") as IHtmlInputElement;
-            //var searchsubmit = document.QuerySelector("input[name='searchsubmit']") as IHtmlInputElement;
-            //#endregion
-
-            //#region 透過post的方式取得搜尋的動畫網址
-            //mainWindow.SB_Hint.MessageQueue.Enqueue("正在搜尋動畫...", "確認", () => mainWindow.SB_Hint.IsActive = false);
-            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);    // 設定Request物件及網址
-            //request.Method = "POST";    // 設定Request方法
-            //request.ContentType = "application/x-www-form-urlencoded";
-            //var sb = new StringBuilder($"formhash={formhash.Value}&srchtxt={search}&searchsubmit={searchsubmit.Value}");    // 設定Post資訊
-            //var byteArray = Encoding.UTF8.GetBytes(sb.ToString());  // 使用UTF8編碼(否則中文會變亂碼)轉成byteArray(指定的Post資訊格式)
-            //using (Stream reqStream = request.GetRequestStream())   // 開始Post
-            //{
-            //    reqStream.Write(byteArray, 0, byteArray.Length);
-            //}
-            //WebResponse response = await request.GetResponseAsync();
-            //string searchAnimationsHref = response.ResponseUri.AbsoluteUri;    // 取得搜尋的動畫網址
-            //#endregion 
-            #endregion
-
             #region 從搜尋的動畫網址取得適當的動畫連結
-            mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得搜尋動畫", "確認", () => mainWindow.SB_Hint.IsActive = false);
             bool noAnimation = true; // 紀錄是否有搜尋到的動畫
             var searchList = document.QuerySelector("#threadlist"); // 搜尋結果, 若為null表示沒搜尋到
             if (searchList != null)
@@ -120,8 +82,6 @@ namespace AnimationPlayer.Models
             }
             else mainWindow.SB_Hint.MessageQueue.Enqueue("搜尋動畫取得完畢, 等待介面顯示...", "確認", () => mainWindow.SB_Hint.IsActive = false);
             mainWindow.PB_Progress.Visibility = Visibility.Collapsed;
-
-            this.chrome.Quit();
         }
 
         /// <summary>

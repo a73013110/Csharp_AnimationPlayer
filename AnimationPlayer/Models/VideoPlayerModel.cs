@@ -1,6 +1,10 @@
-﻿using AnimationPlayer.Objects;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AnimationPlayer.Objects;
 using AnimationPlayer.Reflections;
-using System;
 
 namespace AnimationPlayer.Models
 {

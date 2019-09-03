@@ -76,13 +76,6 @@
                           Height="{Binding ActualHeight, ElementName=metroWindow}">
                 <!--<UserControls:AnimationViewUserControl />-->
             </metro:Flyout>
-            <!--影片播放器-->
-            <metro:Flyout x:Name="Flyout_Video" Position="Bottom" AnimateOpacity="True"
-                          CloseButtonVisibility="Collapsed" TitleVisibility="Collapsed" 
-                          Background="#FF1D1D1D" IsOpen="False"
-                          Height="{cal:Binding (ActualHeight-30), ElementName=metroWindow}">
-                <!--<UserControls:VideoPlayerUserControl />-->
-            </metro:Flyout>
             <!--設定-->
             <metro:Flyout x:Name="Flyout_Setting" Position="Top" AnimateOpacity="True"
                           CloseButtonVisibility="Collapsed" TitleVisibility="Collapsed" 

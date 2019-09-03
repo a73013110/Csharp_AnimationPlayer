@@ -3,6 +3,7 @@ using AnimationPlayer.Objects;
 using AnimationPlayer.Properties;
 using MahApps.Metro.Controls;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -63,17 +64,11 @@ namespace AnimationPlayer.UserControls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private Chrome Player = null;
         private async void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;
-            _ = this.Dispatcher.InvokeAsync(async () =>
-            {
-                // 開啟影片視窗並播放
-                this.Player = new Chrome(true, new Point(Application.Current.MainWindow.Left + Application.Current.MainWindow.Width / 2, Application.Current.MainWindow.Top + Application.Current.MainWindow.Height / 2));
-                await this.Player.Initial();    // 確認chrome是否已經初始化
-                await this.Player.Load($"chrome-extension://{Settings.Default.M3u8Player_ID}/html/Player.html#{animationVodObject.Href}");  // 載入動畫搜尋網站
-            });
+            // 直接用chrome播放
+            Process.Start("chrome.exe", $"chrome-extension://{Settings.Default.M3u8Player_ID}/html/Player.html#{animationVodObject.Href}");
             // 儲存近期播放
             await Task.Run(() =>
             {

@@ -30,7 +30,6 @@ namespace AnimationPlayer
         {
             try
             {
-                foreach (var process in Process.GetProcessesByName("chromedriver")) process.Kill(); // 關閉chromedriver
                 Environment.Exit(0);    // 關閉所有執行序
             }
             catch (Exception exception) { Console.WriteLine("視窗關閉時發現例外狀況: " + exception); }
