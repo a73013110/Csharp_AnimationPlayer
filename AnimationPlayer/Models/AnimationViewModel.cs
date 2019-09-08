@@ -51,8 +51,9 @@ namespace AnimationPlayer.Models
                     if (href.FirstElementChild.TextContent == "站內")
                     {
                         string dataHref = href.FirstElementChild.GetAttribute("data-href").Replace("\n", string.Empty);
-                        string[] data = dataHref.Split('/');
-                        this.VodList.Add(new AnimationVodObject(vod.FirstElementChild.TextContent, "https://vpx.myself-bbs.com/" + data[data.Length - 2] + "/" +  data[data.Length - 1] + "/720p.m3u8"));
+                        string[] data = dataHref.Split('/');    // 動畫ID: data[data.Length - 2], 動畫集數: data[data.Length - 1]
+                        // 儲存動畫ID及集數
+                        this.VodList.Add(new AnimationVodObject(vod.FirstElementChild.TextContent, data[data.Length - 2] + "/" +  data[data.Length - 1]));
                         break;
                     }
                 }

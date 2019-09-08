@@ -23,7 +23,7 @@ namespace AnimationPlayer.UserControls
         /// <param name="e"></param>
         private void Btn_TestChromeConnection_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("chrome.exe", $"chrome-extension://{this.TB_ChromeExtensionID.Text}/html/Player.html#https://cstr-vod.castr.io/vdafddac30977c11e9bdcb/71983cc5-f510-4b36-b77a-fc3d216e15d3/index.m3u8");
+            Process.Start("chrome.exe", $"chrome-extension://{this.TB_ChromeExtensionID.Text}/html/Player.html?v=https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8&type=application/x-mpegURL");
         }
 
         /// <summary>

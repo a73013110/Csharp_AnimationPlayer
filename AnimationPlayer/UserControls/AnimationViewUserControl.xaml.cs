@@ -4,11 +4,14 @@ using AnimationPlayer.Properties;
 using MahApps.Metro.Controls;
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
+using Newtonsoft.Json.Linq;
 
 namespace AnimationPlayer.UserControls
 {
@@ -66,9 +69,30 @@ namespace AnimationPlayer.UserControls
         /// <param name="e"></param>
         private async void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.SB_Hint.MessageQueue.Enqueue("正在取得動畫連結...", "確認", () => mainWindow.SB_Hint.IsActive = false);
             AnimationVodObject animationVodObject = ((ListBoxItem)sender).DataContext as AnimationVodObject;
-            // 直接用chrome播放
-            Process.Start("chrome.exe", $"chrome-extension://{Settings.Default.M3u8Player_ID}/html/Player.html#{animationVodObject.Href}");
+            // 先取得動畫m3u8後, 直接用chrome播放
+            await Task.Run(() =>
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://v.myself-bbs.com/api/files/index/" + animationVodObject.Href);
+                request.Method = "GET";
+                request.Referer = "https://v.myself-bbs.com/player/play/" + animationVodObject.Href;
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string responseString = null;
+                if (response.StatusCode == HttpStatusCode.OK)
+                    using (Stream responseStream = response.GetResponseStream())
+                        using (StreamReader reader = new StreamReader(responseStream))
+                            responseString = reader.ReadToEnd();
+                response.Close();
+                if (responseString != null)
+                {
+                    responseString = responseString.Replace("\\", "");
+                    JObject jObject = JObject.Parse(responseString);
+                    Process.Start("chrome.exe", $"chrome-extension://{Settings.Default.M3u8Player_ID}/html/Player.html?v={jObject["host"][0]}{jObject["video"]["auto"]}&type=application/x-mpegURL");
+                }
+            });
+
             // 儲存近期播放
             await Task.Run(() =>
             {
