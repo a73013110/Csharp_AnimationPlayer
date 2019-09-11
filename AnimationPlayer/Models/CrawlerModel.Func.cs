@@ -20,7 +20,10 @@ namespace AnimationPlayer.Models
         {
             // 先檢查先前是否有儲存
             AnimationObject animation = GetAnimationObjectFromJson(href);
-            if (animation != null) Animations.Add(animation);
+            if (animation != null)
+            {
+                Animations.Add(animation);
+            }
             else    // 若都沒有儲存才至網頁搜尋
             {
                 var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());   // 產生瀏覽網頁的物件

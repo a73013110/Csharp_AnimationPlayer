@@ -67,5 +67,14 @@ namespace AnimationPlayer.Objects
             get { return isFavaorite; }
             set { SetProperty(ref isFavaorite, value); }
         }
+        /// <summary>
+        /// 紀錄取得此動畫的時間
+        /// </summary>
+        private DateTime timespan = DateTime.Now;
+        public DateTime Timespan
+        {
+            get { return timespan; }
+            set { SetProperty(ref timespan, value); }
+        }
     }
 }
