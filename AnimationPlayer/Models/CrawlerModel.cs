@@ -1,22 +1,15 @@
 ﻿using AngleSharp;
 using AngleSharp.Html.Dom;
-using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using MahApps.Metro.Controls.Dialogs;
-using System.Windows;
-using AnimationPlayer.Objects;
-using MaterialDesignThemes.Wpf;
-using MahApps.Metro.Controls;
-using AnimationPlayer.UserControls;
 using AngleSharp.Html.Parser;
-using System.Threading;
-using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
+using AnimationPlayer.Objects;
+using AnimationPlayer.UserControls;
+using System;
 using System.Collections.Generic;
-using System.Windows.Threading;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using static AnimationPlayer.GlobalFunctions.AnimationObjectJson;
 
 namespace AnimationPlayer.Models
 {
@@ -121,9 +114,13 @@ namespace AnimationPlayer.Models
             HashSet<AnimationObject> animations = GetAnimationObjectHashSetFromJson();
             if (animations.Count > 0)
             {
-                foreach (AnimationObject animation in animations)
+                foreach (AnimationObject animation in animations.Reverse()) // 反序添加Animation, animations的順序: 舊->新
                 {
-                    if (animation.IsFavaorite) Animations.Add(animation);   // 只取得最愛的動畫
+                    if (animation.IsFavaorite)
+                    {
+                        Animations.Add(animation);   // 只取得最愛的動畫
+                        CheckAnimationUpdate(animation);    // 檢查是否要更新動畫資訊
+                    }
                 }
             }
 
@@ -148,9 +145,13 @@ namespace AnimationPlayer.Models
             HashSet<AnimationObject> animations = GetAnimationObjectHashSetFromJson();
             if (animations.Count > 0)
             {
-                foreach (AnimationObject animation in animations)
+                foreach (AnimationObject animation in animations.Reverse()) // 反序添加Animation
                 {
-                    if (animation.Recent_Watch_Index >= 0) Animations.Add(animation);   // 只取得最近觀看過的動畫
+                    if (animation.Recent_Watch_Index >= 0)
+                    {
+                        Animations.Add(animation);   // 只取得最近觀看過的動畫
+                        CheckAnimationUpdate(animation);    // 檢查是否要更新動畫資訊
+                    }
                 }
             }
 
