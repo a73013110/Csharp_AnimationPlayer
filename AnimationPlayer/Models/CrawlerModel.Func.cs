@@ -23,7 +23,7 @@ namespace AnimationPlayer.Models
             if (animation != null)
             {
                 Animations.Add(animation);
-                CheckAnimationUpdate(animation);    // 檢查是否要更新動畫資訊
+                UpdateAnimation(animation);    // 檢查是否要更新動畫資訊
             }
             else    // 若都沒有儲存才至網頁搜尋
             {
@@ -35,24 +35,20 @@ namespace AnimationPlayer.Models
             }
         }
         /// <summary>
-        /// 根據TimeSpan檢查以儲存的該動畫是否該更新資訊
+        /// 背景更新動畫資訊
         /// </summary>
         /// <param name="AnimationObject"></param>
-        private void CheckAnimationUpdate(AnimationObject animationObject)
+        private void UpdateAnimation(AnimationObject animationObject)
         {
             Task.Run(async () =>
             {
-                // 若動畫資訊超過7天沒更新, 就更新吧
-                if ((DateTime.Now - animationObject.Timespan) > TimeSpan.FromDays(7))
-                {
-                    var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());   // 產生瀏覽網頁的物件
-                    var document = await context.OpenAsync(animationObject.Href);    // 異步取得網站內容
-                    var meta = document.QuerySelector("*[name='keywords']") as IHtmlMetaElement;    // 從Meta Tag取得動畫名稱
-                    var image = document.QuerySelector("div.info_img_box.fl").FirstElementChild as IHtmlImageElement;  // 從網站內取得特定id tag裡面的li
-                    animationObject.Name = meta.Content;
-                    animationObject.Image_source = image.Source;
-                    animationObject.Timespan = DateTime.Now;
-                }
+                var context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());   // 產生瀏覽網頁的物件
+                var document = await context.OpenAsync(animationObject.Href);    // 異步取得網站內容
+                var meta = document.QuerySelector("*[name='keywords']") as IHtmlMetaElement;    // 從Meta Tag取得動畫名稱
+                var image = document.QuerySelector("div.info_img_box.fl").FirstElementChild as IHtmlImageElement;  // 從網站內取得特定id tag裡面的li
+                animationObject.Name = meta.Content;
+                animationObject.Image_source = image.Source;
+                animationObject.Timespan = DateTime.Now;
             });
         }
     }

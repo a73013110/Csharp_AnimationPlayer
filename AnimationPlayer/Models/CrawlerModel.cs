@@ -119,7 +119,7 @@ namespace AnimationPlayer.Models
                     if (animation.IsFavaorite)
                     {
                         Animations.Add(animation);   // 只取得最愛的動畫
-                        CheckAnimationUpdate(animation);    // 檢查是否要更新動畫資訊
+                        UpdateAnimation(animation);    // 更新動畫資訊
                     }
                 }
             }
@@ -150,7 +150,7 @@ namespace AnimationPlayer.Models
                     if (animation.Recent_Watch_Index >= 0)
                     {
                         Animations.Add(animation);   // 只取得最近觀看過的動畫
-                        CheckAnimationUpdate(animation);    // 檢查是否要更新動畫資訊
+                        UpdateAnimation(animation);    // 更新動畫資訊
                     }
                 }
             }
