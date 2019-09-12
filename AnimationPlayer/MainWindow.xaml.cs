@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using System;
+using System.Windows;
 using System.Diagnostics;
 
 namespace AnimationPlayer
@@ -33,6 +34,28 @@ namespace AnimationPlayer
                 Environment.Exit(0);    // 關閉所有執行序
             }
             catch (Exception exception) { Console.WriteLine("視窗關閉時發現例外狀況: " + exception); }
+        }
+        /// <summary>
+        /// 視窗狀態改變事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MetroWindow_StateChanged(object sender, EventArgs e)
+        {
+            switch (this.WindowState)
+            {
+                case WindowState.Normal:
+                    this.TaskbarIcon.Visibility = Visibility.Collapsed;
+                    break;
+                case WindowState.Minimized:
+                    this.TaskbarIcon.Visibility = Visibility.Visible;
+                    this.Hide();
+                    break;
+                case WindowState.Maximized:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

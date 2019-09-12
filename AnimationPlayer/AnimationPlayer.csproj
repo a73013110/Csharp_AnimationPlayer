@@ -94,6 +94,9 @@
     <Reference Include="DynamicExpresso.Core, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicExpresso.Core.2.3.1\lib\net461\DynamicExpresso.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.0.362, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -152,6 +155,7 @@
     <Compile Include="Models\VideoPlayerModel.cs" />
     <Compile Include="Objects\Chrome.cs" />
     <Compile Include="Reflections\Converter.cs" />
+    <Compile Include="Reflections\TaskbarIconCommand.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UserControls\CrawlerUserControl.Func.xaml.cs" />
     <Compile Include="UserControls\MessageDialogUserControl.xaml.cs">

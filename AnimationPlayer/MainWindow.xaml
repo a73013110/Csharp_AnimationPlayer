@@ -9,7 +9,8 @@
         xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         xmlns:properties="clr-namespace:AnimationPlayer.Properties"
-        xmlns:converter="clr-namespace:AnimationPlayer.Reflections"
+        xmlns:reflections="clr-namespace:AnimationPlayer.Reflections"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         
         mc:Ignorable="d"
                    
@@ -17,11 +18,12 @@
         Height="768" Width="1280"
         BorderThickness="0"
                       
-        WindowStartupLocation="CenterScreen" GlowBrush="Black" MinWidth="720" MinHeight="405" Closing="MetroWindow_Closing">
+        WindowStartupLocation="CenterScreen" GlowBrush="Black" MinWidth="720" MinHeight="405" Closing="MetroWindow_Closing" StateChanged="MetroWindow_StateChanged">
 
     <metro:MetroWindow.Resources>
         <ResourceDictionary>
-            <converter:BitmapToImageSource_Converter x:Key="BitmapToImageSourceConverter" />
+            <reflections:BitmapToImageSource_Converter x:Key="BitmapToImageSourceConverter" />
+            <reflections:TaskbarIconCommand x:Key="TaskbarIconCommand" />
             <ResourceDictionary.MergedDictionaries>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -91,11 +93,18 @@
         <materialDesign:DialogHost.DialogContent>
             <UserControls:MessageDialogUserControl />
         </materialDesign:DialogHost.DialogContent>
-        <Grid>            
+        <Grid>
             <Image Source="{Binding Source={x:Static properties:Resources.background}, Converter={StaticResource BitmapToImageSourceConverter}}" Stretch="Fill" />
             <metro:MetroProgressBar x:Name="PB_Progress" Visibility="Collapsed" VerticalAlignment="Top" IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush2}" Height="4" MinHeight="4" />
             <UserControls:CrawlerUserControl x:Name="UC_CrawlerUserControl" />
             <materialDesign:Snackbar x:Name="SB_Hint" />
+            <tb:TaskbarIcon x:Name="TaskbarIcon" IconSource="./icon.ico" LeftClickCommand="{StaticResource TaskbarIconCommand}" Visibility="Collapsed">
+                <tb:TaskbarIcon.TrayToolTip>
+                    <Border Background="Black" CornerRadius="2" Opacity="0.8" Width="160" Height="40">
+                        <TextBlock Text="點擊以開啟視窗" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource AccentColorBrush4}" FontSize="14" />
+                    </Border>
+                </tb:TaskbarIcon.TrayToolTip>
+            </tb:TaskbarIcon>
         </Grid>
     </materialDesign:DialogHost>
 </metro:MetroWindow>
