@@ -18,7 +18,8 @@ namespace AnimationPlayer.GlobalFunctions
         /// 新增或更新動畫至Json檔
         /// </summary>
         /// <param name="animationObject">欲更新的動畫</param>
-        public static void SetAnimationObjectToJson(AnimationObject animationObject)
+        /// <param name="isLatestUpdate">是否要更新LatestUpdate</param>
+        public static void SetAnimationObjectToJson(AnimationObject animationObject, bool isLatestUpdate = true)
         {
             // 檢索速度最快, 使用的HashSet必須自定義Comparer
             HashSet<AnimationObject> animationList = ReadFromFile<HashSet<AnimationObject>>(path);  // 讀取
@@ -30,7 +31,7 @@ namespace AnimationPlayer.GlobalFunctions
             }
             if (animationObject.IsFavaorite || animationObject.Recent_Watch_Index >= 0)
             {
-                animationObject.LatestUpdate = DateTime.Now;
+                if (isLatestUpdate) animationObject.LatestUpdate = DateTime.Now;
                 animationList.Add(animationObject); // 添加資料進去HashSet
             }
             WriteToFile(animationList, path);  // 儲存

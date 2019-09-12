@@ -48,7 +48,7 @@ namespace AnimationPlayer.Models
                 var image = document.QuerySelector("div.info_img_box.fl").FirstElementChild as IHtmlImageElement;  // 從網站內取得特定id tag裡面的li
                 animationObject.Name = meta.Content;
                 animationObject.Image_source = image.Source;
-                SetAnimationObjectToJson(animationObject); // 更新該動畫資訊到檔案
+                SetAnimationObjectToJson(animationObject, false); // 更新該動畫資訊到檔案, 背景自動更新不會更新動畫的LatestUpdate時間
             });
         }
     }

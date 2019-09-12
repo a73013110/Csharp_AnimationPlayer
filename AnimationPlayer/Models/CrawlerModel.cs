@@ -149,6 +149,7 @@ namespace AnimationPlayer.Models
                 {
                     if (animation.Recent_Watch_Index >= 0)
                     {
+                        Console.WriteLine(animation.LatestUpdate);
                         Animations.Add(animation);   // 只取得最近觀看過的動畫
                         UpdateAnimation(animation);    // 更新動畫資訊
                     }
