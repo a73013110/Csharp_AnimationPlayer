@@ -28,7 +28,11 @@ namespace AnimationPlayer.GlobalFunctions
                 animationList = animationList.ToHashSet(new AnimationObjectComparer()); // 設置Comparer
                 if (animationList.Contains(animationObject)) animationList.Remove(animationObject); // 若動畫已存在HashSet, 先刪除
             }
-            if (animationObject.IsFavaorite || animationObject.Recent_Watch_Index >= 0) animationList.Add(animationObject); // 添加資料進去HashSet
+            if (animationObject.IsFavaorite || animationObject.Recent_Watch_Index >= 0)
+            {
+                animationObject.LatestUpdate = DateTime.Now;
+                animationList.Add(animationObject); // 添加資料進去HashSet
+            }
             WriteToFile(animationList, path);  // 儲存
         }
 

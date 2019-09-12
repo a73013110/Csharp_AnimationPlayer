@@ -35,7 +35,7 @@ namespace AnimationPlayer.Models
             }
         }
         /// <summary>
-        /// 背景更新動畫資訊
+        /// 背景更新經儲存的動畫資訊
         /// </summary>
         /// <param name="AnimationObject"></param>
         private void UpdateAnimation(AnimationObject animationObject)
@@ -48,7 +48,7 @@ namespace AnimationPlayer.Models
                 var image = document.QuerySelector("div.info_img_box.fl").FirstElementChild as IHtmlImageElement;  // 從網站內取得特定id tag裡面的li
                 animationObject.Name = meta.Content;
                 animationObject.Image_source = image.Source;
-                animationObject.Timespan = DateTime.Now;
+                SetAnimationObjectToJson(animationObject); // 更新該動畫資訊到檔案
             });
         }
     }

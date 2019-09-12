@@ -68,13 +68,13 @@ namespace AnimationPlayer.Objects
             set { SetProperty(ref isFavaorite, value); }
         }
         /// <summary>
-        /// 紀錄取得此動畫的時間
+        /// 紀錄最近更新此動畫的時間
         /// </summary>
-        private DateTime timespan = DateTime.Now;
-        public DateTime Timespan
+        private DateTime latestUpdate = DateTime.Now;
+        public DateTime LatestUpdate
         {
-            get { return timespan; }
-            set { SetProperty(ref timespan, value); }
+            get { return latestUpdate; }
+            set { SetProperty(ref latestUpdate, value); }
         }
     }
 }

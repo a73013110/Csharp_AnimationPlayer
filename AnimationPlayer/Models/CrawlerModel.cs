@@ -114,7 +114,7 @@ namespace AnimationPlayer.Models
             HashSet<AnimationObject> animations = GetAnimationObjectHashSetFromJson();
             if (animations.Count > 0)
             {
-                foreach (AnimationObject animation in animations.Reverse()) // 反序添加Animation, animations的順序: 舊->新
+                foreach (AnimationObject animation in animations.OrderByDescending(x => x.LatestUpdate))    // 根據更新順序添加動畫, 最近更新的動畫顯示在前面
                 {
                     if (animation.IsFavaorite)
                     {
@@ -145,7 +145,7 @@ namespace AnimationPlayer.Models
             HashSet<AnimationObject> animations = GetAnimationObjectHashSetFromJson();
             if (animations.Count > 0)
             {
-                foreach (AnimationObject animation in animations.Reverse()) // 反序添加Animation
+                foreach (AnimationObject animation in animations.OrderByDescending(x => x.LatestUpdate))    // 反序添加Animation
                 {
                     if (animation.Recent_Watch_Index >= 0)
                     {
